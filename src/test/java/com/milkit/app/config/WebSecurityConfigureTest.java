@@ -21,7 +21,7 @@ public class WebSecurityConfigureTest {
     
  
     @Test
-    public void passwordEncoder테스트() {
+    public void passwordEncoder_TEST() {
 //    	passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     	passwordEncoder = new StandardPasswordEncoder();
 //    	passwordEncoder = new BCryptPasswordEncoder();

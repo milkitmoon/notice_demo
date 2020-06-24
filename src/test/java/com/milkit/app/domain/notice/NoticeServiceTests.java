@@ -32,16 +32,16 @@ class NoticeServiceTests {
 
 
 	@Test
-	public void Notice테스트() throws Exception {
-		Long id = insert(sequence(), "제목1", "내용1", "kim");
+	public void Notice_TEST() throws Exception {
+		Long id = insert(sequence(), "title1", "contents1", "kim");
 		assertTrue(id > 0);
 		
 		Notice notice = noticeServie.select(id);
 		assertTrue(notice != null);
 		
-		update(id, "제목2", "내용2", "kim");
+		update(id, "title2", "contents2", "kim");
 		Notice updateNotice = noticeServie.select(id);
-		assertTrue(updateNotice.getTitle().equals("제목2"));
+		assertTrue(updateNotice.getTitle().equals("title2"));
 
 		delete(id, "test");
 		Notice deleteNotice = noticeServie.select(id);
@@ -50,17 +50,17 @@ class NoticeServiceTests {
 		List<Notice> list = selectAll(0, 100);
 		assertTrue(list.size() == 0);
 
-		Notice전체조회테스트();
+		Notice_selectAll_TEST();
 	}
 
 
 	
 	@Test
-	public void Notice전체조회테스트() throws Exception {
+	public void Notice_selectAll_TEST() throws Exception {
 
-		Notice등록테스트();
-		Notice등록테스트();
-		Notice등록테스트();
+		Notice_insert_TEST();
+		Notice_insert_TEST();
+		Notice_insert_TEST();
 		
 		List<Notice> list = selectAll(0, 2);
 
@@ -69,8 +69,8 @@ class NoticeServiceTests {
 	}
 
 	@Test
-	public void Notice조회테스트() throws Exception {
-		Long id = insert(sequence(), "제목1", "내용1", "kim");
+	public void Notice_select_TEST() throws Exception {
+		Long id = insert(sequence(), "title1", "contents1", "kim");
 		
 		Notice notice = noticeServie.select(id);
 
@@ -78,26 +78,26 @@ class NoticeServiceTests {
 	}
 
 	@Test
-	public void Notice등록테스트() throws Exception {
-		Long id = insert(sequence(), "제목1", "내용1", "kim");
+	public void Notice_insert_TEST() throws Exception {
+		Long id = insert(sequence(), "title1", "contents1", "kim");
 
 		assertTrue(id > 0);
 	}
 	
 	@Test
-	public void Notice수정테스트() throws Exception {
-		Long id = insert(sequence(), "제목1", "내용1", "kim");
+	public void Notice_update_TEST() throws Exception {
+		Long id = insert(sequence(), "title1", "contents1", "kim");
 		
-		update(id, "제목2", "내용2", "kim");
+		update(id, "title2", "contents2", "kim");
 		
 		Notice notice = noticeServie.select(id);
 
-		assertTrue(notice.getTitle().equals("제목2"));
+		assertTrue(notice.getTitle().equals("title2"));
 	}
 	
 	@Test
-	public void Notice삭제테스트() throws Exception {
-		Long id = insert(sequence(), "제목1", "내용1", "kim");
+	public void Notice_delete_TEST() throws Exception {
+		Long id = insert(sequence(), "title1", "contents1", "kim");
 		delete(id, "test");
 		
 		Notice notice = noticeServie.select(id);
@@ -107,7 +107,7 @@ class NoticeServiceTests {
 
 	
 	@Test
-	public void Notice_Seq조회테스트() throws Exception {
+	public void Notice_sequence_TEST() throws Exception {
 		Long seq = sequence();
 
 		assertTrue(seq > 0);

@@ -23,9 +23,9 @@ class UserInfoServiceTests {
 
 
 	@Test
-	public void UserInfo_ID조회테스트() throws Exception {
+	public void UserInfo_ID_select_TEST() throws Exception {
 
-		Long id = UserInfo등록테스트();
+		Long id = UserInfo_insert_TEST();
 
 		UserInfo userInfo = userInfoServie.select(id);
 
@@ -33,9 +33,9 @@ class UserInfoServiceTests {
 	}
 	
 	@Test
-	public void UserInfo_UserID조회테스트() throws Exception {
+	public void UserInfo_selectUserID_TEST() throws Exception {
 
-		UserInfo등록테스트();
+		UserInfo_insert_TEST();
 
 		UserInfo userInfo = userInfoServie.select("test");
 
@@ -46,7 +46,7 @@ class UserInfoServiceTests {
 
 
 	@Test
-	public void UserInfo조회테스트() throws Exception {
+	public void UserInfo_selectAll_TEST() throws Exception {
 
 		List<UserInfo> list = userInfoServie.selectAll();
 
@@ -54,7 +54,7 @@ class UserInfoServiceTests {
 	}
 
 	@Test
-	public Long UserInfo등록테스트() throws Exception {
+	public Long UserInfo_insert_TEST() throws Exception {
 
 //		String password = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";	//sha256
 		String password = "$2a$10$U.0zo/wtkAiqBfxoaeiHmuzUT7pjf5hJmmn/Hg5iFyuEMNUvA.FpW";		//bcrypt
