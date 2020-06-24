@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.milkit.app.common.file.FileUploadProperties;
 
 @SpringBootApplication
-//@EnableAutoConfiguration(exclude={SecurityAutoConfiguration.class})
 @EnableConfigurationProperties(FileUploadProperties.class)
 @PropertySource("classpath:fileupload.properties")
 public class DemoApplication extends SpringBootServletInitializer {
