@@ -84,7 +84,7 @@ logger.debug("\n\n\n"+properties.getLocation()+"\n\n\n\n");
             }
             
 //logger.debug("\n\n\n"+this.rootLocation.resolve(filename).toString()+"\n\n\n");
-			if(isImage(filename)) {
+			if(isImage(file.getContentType())) {
 	            Thumbnails.of(file.getInputStream())
 	            .size(200, 200)
 	    		.toFile(new File(this.rootLocation.resolve(properties.getThumnailPrefix()+filename).toString()));
