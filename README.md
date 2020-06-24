@@ -24,12 +24,12 @@
 
 ## 실행 하기
 
-- 소스 main Application 실행하기 
-com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있습니다.
+> 소스 main Application 실행하기 
+- com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있습니다.
 
 <img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
 
-- build 된 war 실행하기 
+> build 된 war 실행하기 
 [프로젝트경로]/build/lib 경로에 build 되어 생성된 war 파일을 console 창에서 실행합니다.
 
 ```bash
@@ -41,7 +41,7 @@ com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있�
 
 # 2. 로그인
 
-접속경로는 다음과 같습니다. [http://localhost:8080/main](http://localhost:8080/) 
+접속경로는 다음과 같습니다. [http://localhost:8080/](http://localhost:8080/) 
 
 - 소스 main Application 실행하기 
 id : test
