@@ -26,17 +26,8 @@
 
 > 소스 main Application 실행하기 
 - com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있습니다.
-
+ 
 <img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
-
-> build 된 war 실행하기 
-- [프로젝트경로]/build/lib 경로에 build 되어 생성된 war 파일을 console 창에서 실행합니다.
-
-```bash
-./java -jar demo-0.0.1-SNAPSHOT.war
-```
-
-<img src="https://user-images.githubusercontent.com/61044774/85558202-7b9b1500-b663-11ea-931d-0e9082539619.jpg" width="90%"></img>
 
 
 # 3. 로그인
@@ -64,6 +55,7 @@
 - 공지목록 조회 기능 (제목, 작성일, 작성자, 최종수정일, 내용)
 - 페이징 기능 (10개 마다)
 - 여러개의 첨부파일 등록 기능
+*파일업로드 타이밍으로 이미지 미리보기가 늦게될 수 있습니다.
 
 > 요구사항
 - 웹어플리케이션으로 개발
