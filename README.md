@@ -30,7 +30,7 @@
 <img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
 
 > build 된 war 실행하기 
-[프로젝트경로]/build/lib 경로에 build 되어 생성된 war 파일을 console 창에서 실행합니다.
+- [프로젝트경로]/build/lib 경로에 build 되어 생성된 war 파일을 console 창에서 실행합니다.
 
 ```bash
 ./java -jar demo-0.0.1-SNAPSHOT.war
