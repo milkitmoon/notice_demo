@@ -25,9 +25,9 @@ class UserInfoServiceTests {
 	@Test
 	public void UserInfo_ID_select_TEST() throws Exception {
 
-		Long id = UserInfo_insert_TEST();
+		UserInfo_insert_TEST();
 
-		UserInfo userInfo = userInfoServie.select(id);
+		UserInfo userInfo = userInfoServie.select(1l);
 
 		logger.debug(userInfo.toString());
 	}
@@ -54,7 +54,7 @@ class UserInfoServiceTests {
 	}
 
 	@Test
-	public Long UserInfo_insert_TEST() throws Exception {
+	public void UserInfo_insert_TEST() throws Exception {
 
 //		String password = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";	//sha256
 		String password = "$2a$10$U.0zo/wtkAiqBfxoaeiHmuzUT7pjf5hJmmn/Hg5iFyuEMNUvA.FpW";		//bcrypt
@@ -63,8 +63,6 @@ class UserInfoServiceTests {
 		Long id = userInfoServie.insert(userInfo);
 
 		logger.debug(id.toString());
-
-		return id;
 	}
 
 }
