@@ -39,18 +39,25 @@
 <img src="https://user-images.githubusercontent.com/61044774/85558202-7b9b1500-b663-11ea-931d-0e9082539619.jpg" width="90%"></img>
 
 
-# 2. 로그인
+# 3. 로그인
 
-접속경로는 다음과 같습니다. [http://localhost:8080/](http://localhost:8080/) 
+> 웹접속경로는 다음과 같습니다. [http://localhost:8080/](http://localhost:8080/) 
 
-- 소스 main Application 실행하기 
-id : test
-password : test
-로 접속할 수 있습니다. 
+- id : test
+- password : test
 
 <img src="https://user-images.githubusercontent.com/61044774/85558776-0a0f9680-b664-11ea-9efd-e7fa8829266f.jpg" width="90%"></img>
 
-# 3. 구현기능 및 요구사항
+> H2 database console 접속경로는 다음과 같습니다. [http://localhost:8080/h2-console/](http://localhost:8080/h2-console/) 
+
+<img src="https://user-images.githubusercontent.com/61044774/85590819-b0b56080-b67f-11ea-8415-3eb50f5b82b8.jpg" width="90%"></img>
+
+- Driver Class : org.h2.Driver
+- JDBC URL : jdbc:h2:mem:testdb
+- User Name : sa
+- Password : 없음
+
+# 4. 구현기능 및 요구사항
 > 구현기능
 - 공지 추가기능
 - 공지 수정/삭제기능
