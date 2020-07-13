@@ -64,7 +64,7 @@ class NoticeServiceTests {
 		
 		List<Notice> list = selectAll(0, 2);
 		
-		logger.debug("list:"+list);
+		logger.debug("list2:"+list);
 
 		assertTrue(list.size() == 2);
 
