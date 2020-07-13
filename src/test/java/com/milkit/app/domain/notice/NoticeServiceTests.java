@@ -63,6 +63,8 @@ class NoticeServiceTests {
 		Notice_insert_TEST();
 		
 		List<Notice> list = selectAll(0, 2);
+		
+		logger.debug("list:"+list);
 
 		assertTrue(list.size() == 2);
 
