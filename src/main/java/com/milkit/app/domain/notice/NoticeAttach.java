@@ -92,7 +92,7 @@ public class NoticeAttach {
 	}
 
     private String convertContentType(String contentType) {
-		return contentType.toLowerCase().matches("image/jpeg|image/png|image/gif") ? "1" : "9";
+		return contentType.toLowerCase().matches("image/jpeg|image/png|image/gif") ? ResourceTypeEnum.IMAGE.getValue() : ResourceTypeEnum.ETC.getValue();
 	}
 
 	public Long getId() {
