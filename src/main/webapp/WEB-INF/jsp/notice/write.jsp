@@ -1,21 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
-
-<!DOCTYPE HTML>
-<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>Main</title>
 
 <style type="text/css" media="screen">
 
@@ -98,8 +82,9 @@ function fncBack() {
 					</span>
 				</div>
 			</section>
-					 
-			<section class="inp_01_exc">
+ 
+ 
+ 			<section class="inp_01_exc">
 				<section class="sec chart last q3_up" style="background: #eff2f5;">
 					<div id="mparent" style="display:inline-block; float: left;">
 						<div style="height: 50px; line-height: 50px; padding-left: 10px; text-align: left">
@@ -111,23 +96,21 @@ function fncBack() {
 						</div>
 					</div>
 					                        
-					<div style="display: inline-block;" class="width-20"/>
 					                        
-					<div id="rparent" style="display: inline-block; ">
-						<div style="text-align: left">
-							<div style="height: 50px; line-height: 50px; padding-left: 10px; text-align: left">
-								<span style="color: #3C4A57; font-size: 16px; font-weight: 500;">미리보기 (이미지파일일 경우)</span>
-							</div>
-							<div style="height:160px;">
-								<div style="padding-left:10px;">
-									<a id="posImg"><img src="../../images/blank_img.png" alt="productImg" width="184" height="196" style="display: inline-block;"></a>
-								</div>
+					<div id="rparent" style="display: inline-block;  float: left;">
+						<div style="height: 50px; line-height: 50px; padding-left: 10px; text-align: left">
+							<span style="color: #3C4A57; font-size: 16px; font-weight: 500; padding-left:10px;">미리보기 (이미지파일일 경우)</span>
+						</div>
+						<div style="height:240px;">
+							<div style="padding-left:10px;">
+								<a id="posImg"><img src="../../images/blank_img.png" alt="productImg" width="240" height="240" style="display: inline-block;"></a>
 							</div>
 						</div>
 					</div>
 				</section>
 			</section>
-
+			
+ 
 		</form>
 		
 		

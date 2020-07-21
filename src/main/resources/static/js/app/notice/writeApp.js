@@ -3,13 +3,13 @@
 function initApp(wmode, id) {
 
 	$(document).ready(function() {
-		
+
 		fncFormRequest('#listForm', contextPath+'/api/noticeattach/upload');
-		
+
 		jQuery("#wmode").val(wmode);
 		jQuery("#id").val(id);
 		jQuery("#noticeID").val(id);
-		
+
 		if(typeof wmode != 'undefined' && wmode == 'u') {
 			initInfo(id);
 		}
@@ -22,8 +22,8 @@ function initApp(wmode, id) {
 
 
 function initInfo(id) {
-	
-	fncJsonRequest2('GET', contextPath+'/api/notice/'+id, true, null, 
+
+	fncJsonRequest2('GET', contextPath+'/api/notice/'+id, true, null,
 		function(resultCode, resultMessage, resultValue) {
 			if (resultCode == RESULT_CODE_OK) {
 				$("#id").val(resultValue.id);
@@ -41,7 +41,7 @@ function initInfo(id) {
 
 function initGrid() {
     $(document).ready(function () {
- 
+
 	    $('#mlist').jqGrid({
 	    	url: contextPath+"/api/noticeattach/"+jQuery("#id").val(),
 	        datatype: 'json',
@@ -59,7 +59,7 @@ function initGrid() {
 	            {name: 'delForm', index: 'delForm', align: 'center', width: 40, formatter:delFormatter}
 	        ],
 //	        height: initGridHeight,
-	        height: 140,
+	        height: 184,
 	        width: 300,
 	        rownumbers: true,
 	        rowNum: 10,
@@ -76,13 +76,13 @@ function initGrid() {
 	        loadComplete : function (data) {
 		    	setLocalDataType(this, data);
 		    },
-		    onCellSelect: function(rowid,icol,cellcontent,e) {  
+		    onCellSelect: function(rowid,icol,cellcontent,e) {
 		    	var td = e.target;
 		        var index = $.jgrid.getCellIndex(td);
-		     
+
 		        if(index != 1) {
 			    	var rowData = jQuery("#mlist").jqGrid('getRowData',rowid);
-					
+
 //			    	jQuery("#slist").jqGrid('setGridParam', {cmpCD: rowData.cmpCD, brandCD: rowData.brandCD, storeCD: rowData.storeCD});
 //			    	jQuery("#caption").html('상품 목록  ['+rowData.storeNM+' - '+rowData.itemSeq+']');
 
@@ -122,8 +122,8 @@ function initGrid() {
 	            {multipleSearch: false,
 	                sopt:['cn']}
 	        );
-	    });	
-	    
+	    });
+
 
 
     });
@@ -133,19 +133,19 @@ function initGrid() {
 function validateNotice() {
 	var title = jQuery("#title").val();
 	var content = jQuery("#content").val();
-	
+
 	if (title == "") {
 		alert("제목을 입력해 주세요");
 		$("#title").focus();
 		return false;
 	}
-	
+
 	if (content == "") {
 		alert("내용을 입력해 주세요");
 		$("#content").focus();
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -153,39 +153,31 @@ function validateNotice() {
 function write() {
 	if( validateNotice() ) {
 		if(confirm("공지사항을 등록/수정 하시겠습니까 ?")) {
-			
+
 			var wmode = jQuery("#wmode").val();
 			var id = jQuery("#id").val();
 			var title = jQuery("#title").val();
 			var content = jQuery("#content").val();
 
-/*			
-			var map = new Map();
-			map.put("id", id);
-			map.put("title", title);
-			map.put("content", content);
-			var userJSON = map.jsonString();
-*/
-			
 			var obj = new Object();
 			obj.id = id;
 			obj.title = title;
 			obj.content = content;
-			var userJSON = JSON.stringify(obj); 
-			
+			var userJSON = JSON.stringify(obj);
+
 //alert("userJSON:"+userJSON);
 			var gridUrl = contextPath+"/api/notice";
-			
+
 			if(typeof wmode != 'undefined' && wmode == 'i') {
 				fncJsonPost(gridUrl, userJSON);
 			} else {
 				fncJsonPut(gridUrl, userJSON);
 			}
-			
+
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -206,34 +198,14 @@ function insertResourceData() {
 function fncInsertReady() {
 	var isInsertReady = true;
 
-/*	
-	if($('#downloadCD').val() == '' || $('#downloadCD').val() == null && $('#downloadCD').val() == 'undefined' && typeof $('#downloadCD').val() == 'undefined') {
-//		alert("이미지를 등록할 '다운로드 정보'를 먼저 선택해 주세요.");
-		var initSeq = $("#seq").val();
-		var initDownloadNM = $("#downloadNM").val();
-		
-		if( (typeof initSeq != 'undefined' && initSeq == '-1')
-			&& (typeof initDownloadNM != 'undefined' && initDownloadNM != null && initDownloadNM != '')) {
-			
-			insert('N');
-			if($('#downloadCD').val() == '') {
-				return false;
-			};
-		} else {
-			alert("이미지를 등록할 '다운로드 정보'를 먼저 선택해 주세요.");
-			return false;
-		}
-	}
-*/
-	
 	if($('#uploadfile').val() == '') {
 //		document.forms["listForm"]["uploadfile"].value
 		alert("파일을 먼저 등록 하여야 합니다.");
 		$('#uploadfile').focus();
-		
+
 		isInsertReady = false;
 	}
-	
+
 	return isInsertReady;
 }
 
@@ -243,14 +215,14 @@ function beforeSerialize($form, options) {
 
 
 function processSuccess(result, statusText, xhr, $form) {
-    
+
 	$("#mlist").jqGrid("clearGridData", true);
 
 	if(result.resultCode == RESULT_CODE_OK) {
 	   	alert("이미지가 업로드되었습니다.");
-	   	
+
 	   	var resultData = result.resultValue;
-	   	
+
 	   	fncSearchResourceDataInfo(resultData.noticeID);
 	   	if(resultData.resourceType == '1') {
 	   		renderImage("#posImg", resultData.url, resultData.thumbUrl, "#imgDialog", null);
@@ -260,7 +232,7 @@ function processSuccess(result, statusText, xhr, $form) {
 	} else {
 		alert(result.resultMessage);
 	}
-	
+
 	fncClearFileNode();
 
 }
@@ -271,7 +243,7 @@ function processError(request, status, error) {
     } else {
         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     }
-    
+
     fncClearFileNode();
 }
 
@@ -279,15 +251,15 @@ function fncClearFileNode() {
 //	$("#uploadfile").remove();
 	$("#fileDiv").html("<input style='height:20px' path='uploadfile' type='file' id='uploadfile' name='uploadfile' onchange='fncUploadReady()'/>");
 
-    $(function(){  
-      	 $("input[type=file]").filestyle({ 
-      	 image: "../../images/btn_file.gif", 
+    $(function(){
+      	 $("input[type=file]").filestyle({
+      	 image: "../../images/btn_file.gif",
 
       	 imagewidth : 80,
       	 marginleft : 10,
       	 width : 180,
       	 border:"1px solid #000000"
-      	 }); 
+      	 });
       });
 }
 
@@ -299,8 +271,8 @@ function renderImage(imgID, imagePath, imageTmbPath, dialogID, imageCallbackFnc)
 			id : 'Myid',
 			src : imageTmbPath,
 			alt : 'MyAlt',
-			width : 184,
-			height : 196,
+			width : 240,
+			height : 240,
 			onclick : 'javascript:imageDialog("' + imagePath + '","'+ dialogID + '")'
 		});
 
@@ -308,18 +280,21 @@ function renderImage(imgID, imagePath, imageTmbPath, dialogID, imageCallbackFnc)
 
 		$(imgID).html(image);
 	}
-	
+
 	if (imageCallbackFnc == null || (imageCallbackFnc && typeof(imageCallbackFnc) !== 'function')) {
 		imageCallbackFnc = function() {};
 	}
-	
+
 	imageCallbackFnc();
 }
 
 function imageDialog(resourceURL, dialogID) {
-	
+
+//alert("resourceURL:"+resourceURL+"	dialogID:"+dialogID);
+//dialogID = '';
+
 	if (dialogID != null && dialogID != '' && typeof dialogID != 'undefined') {
-		
+
 		$("" + dialogID).hide().empty();
 		this.$OuterDiv = $("" + dialogID).hide().append(
 				$('<img style="position:absolute; top:0; bottom:0; left:0; right:0; margin: auto;"></img>').attr({
@@ -349,13 +324,13 @@ function imageDialog(resourceURL, dialogID) {
 
 function resourceTypeNMFormatter(cellValue, options, rowdata, action) {
 	var formatHtml = '';
-	
+
 	if(rowdata.resourceType == "1") {
 		formatHtml = "<a style= 'color: #0040FF;'>이미지</a>";
 	} else {
 		formatHtml =  "<a style= 'color: #DC143C;'>기타</a>";
 	}
-	
+
 	return formatHtml;
 }
 
@@ -365,7 +340,7 @@ function delFormatter(cellValue, options, rowdata, action) {
 
 function deleteBtn(selectedID) {
 	var gridUrl = contextPath+'/api/noticeattach/'+selectedID;
-	
+
 	if(confirm("삭제하시겠습니까?")) {
 		fncJsonRequest2('DELETE', gridUrl, false, '', function(resultCode, resultMessage, resultValue) {
 			alert(resultMessage);
@@ -374,7 +349,7 @@ function deleteBtn(selectedID) {
 				fncSearchResourceDataInfo($("#id").val());
 			}
 		});
-		
+
 		return true;
 	}
 
@@ -384,14 +359,14 @@ function deleteBtn(selectedID) {
 
 function fncSearchResourceDataInfo(noticeID) {
 	var gridUrl = contextPath+"/api/noticeattach/"+noticeID;
-	
-//alert(noticeID);	
+
+//alert(noticeID);
 	if(noticeID == null || noticeID == '' || typeof noticeID == 'undefined') {
 		return;
 	}
-	
+
 	var param = 'noticeID='+noticeID+'&useYN=Y';
-	
+
 	$("#mlist").jqGrid("clearGridData", true);
 	$("#mlist").jqGrid('setGridParam',{datatype:'json', url:gridUrl+'?'+param,page:1}).trigger('reloadGrid');
 }
