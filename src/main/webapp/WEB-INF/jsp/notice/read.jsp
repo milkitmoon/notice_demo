@@ -60,21 +60,21 @@ function fncBack() {
 		<section class="inp_01">
 			<div class="mem_nm">
 				<div class="pl10">글제목</div>
-				<div id="title" class="pl10" style="width:260px;  background: white;  font-weight: normal; text-align: left;"></div>
+				<div id="title" class="pl10" style="width:160px;  background: white;  font-weight: normal; text-align: left;"></div>
 			</div>
 			<div class="mem_nm">
 				<div class="pl10">작성자</div>
-				<div id="instUser" class="pl10" style="width:260px;  background: white;  font-weight: normal; text-align: left;"></div>
+				<div id="instUser" class="pl10" style="width:160px;  background: white;  font-weight: normal; text-align: left;"></div>
 			</div>
 		</section>
 		<section class="inp_02">
 			<div class="mem_nm">
 				<div class="pl10">등록시간</div>
-				<div id="instTime" class="pl10" style="width:260px;  background: white;  font-weight: normal; text-align: left;"></div>
+				<div id="instTime" class="pl10" style="width:160px;  background: white;  font-weight: normal; text-align: left;"></div>
 			</div>
 			<div class="mem_nm">
 				<div class="pl10">최종수정시간</div>
-				<div id="updTime" class="pl10" style="width:260px;  background: white; font-weight: normal; text-align: left;"></div>
+				<div id="updTime" class="pl10" style="width:160px;  background: white; font-weight: normal; text-align: left;"></div>
 			</div>
 		</section>
 		
