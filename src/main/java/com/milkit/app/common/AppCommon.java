@@ -20,17 +20,17 @@ public class AppCommon {
     }
 	
 	
-	@Value("${image.thumbnail.width:200}")
-	public int THUMBNALE_WIDTH = 200;
+	@Value("${image.thumbnail.width:240}")
+	public int THUMBNALE_WIDTH = 240;
 	
-	@Value("${image.thumbnail.height:200}")
-	public int THUMBNALE_HEIGHT = 200;
+	@Value("${image.thumbnail.height:240}")
+	public int THUMBNALE_HEIGHT = 240;
 	
-	@Value("${image.width:200}")
-	public int IMAGE_WIDTH = 200;
+	@Value("${image.width:368}")
+	public int IMAGE_WIDTH = 368;
 	
-	@Value("${image.height:200}")
-	public int IMAGE_HEIGHT = 200;
+	@Value("${image.height:392}")
+	public int IMAGE_HEIGHT = 392;
 	
 	
 	

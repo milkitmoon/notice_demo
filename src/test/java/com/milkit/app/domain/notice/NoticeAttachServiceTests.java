@@ -29,7 +29,7 @@ class NoticeAttachServiceTests {
 
 
 	@Test
-	public void NoticeAttach_TEST() throws Exception {
+	public void NoticeAttach_테스트() throws Exception {
 		Long id = insert(1l, "test.jpg", "Y");
 		assertTrue(id > 0);
 
@@ -37,13 +37,13 @@ class NoticeAttachServiceTests {
 		List<NoticeAttach> list = selectAll(1l, 0, 10);
 		assertTrue(list.size() == 0);
 
-		NoticeAttach_selectAll_TEST();
+		전체조회_테스트();
 	}
 
 
 /**/
 	@Test
-	public void NoticeAttach_selectAll_TEST() throws Exception {
+	public void 전체조회_테스트() throws Exception {
 		insert(1l, "test.jpg", "Y");
 		insert(1l, "test2.jpg", "Y");
 		insert(1l, "test3.jpg", "Y");
@@ -54,7 +54,7 @@ class NoticeAttachServiceTests {
 	}
 
 	@Test
-	public void NoticeAttach_insert_TEST() throws Exception {
+	public void 등록_테스트() throws Exception {
 		Long id = insert(1l, "test.jpg", "Y");
 
 		assertTrue(id > 0);
@@ -62,7 +62,7 @@ class NoticeAttachServiceTests {
 
 	
 	@Test
-	public void NoticeAttach_delete_TEST() throws Exception {
+	public void 삭제_테스트() throws Exception {
 		Long id = insert(1l, "test.jpg", "Y");
 		delete(id, "test");
 		
