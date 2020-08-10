@@ -37,6 +37,7 @@ function fncBack() {
 	<input id="id" name="id" type="hidden" value ="-1"/>
 </form>
 
+
 <body>
 	<main>
 		<div class="tit-bar"><i class="fa fa-map-marker"></i> 공지사항 조회</div>
