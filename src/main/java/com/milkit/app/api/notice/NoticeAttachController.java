@@ -34,6 +34,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milkit.app.common.ErrorCode;
 import com.milkit.app.common.exception.ServiceException;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.common.response.GenericResponse;
 import com.milkit.app.common.response.GridResponse;
 import com.milkit.app.domain.notice.Notice;
@@ -45,12 +46,13 @@ import com.milkit.app.domain.userinfo.UserInfo;
 
 import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/api/noticeattach")
+@Slf4j
 public class NoticeAttachController {
-	
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeAttachController.class);
 
     @Autowired
     private NoticeAttachServiceImpl noticeAttachService;
@@ -64,58 +66,29 @@ public class NoticeAttachController {
 			) throws Exception {
 
     	Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(limit));
-    	
+    	Page<NoticeAttach> pages = noticeAttachService.selectAll(Long.valueOf(noticeID), useYN, pageable);
+
     	GridResponse<NoticeAttach> response = new GridResponse<NoticeAttach>();
-    	
-    	try {
-	    	Page<NoticeAttach> pages = noticeAttachService.selectAll(Long.valueOf(noticeID), useYN, pageable);
-	    	
-	    	response.setRows(pages.getContent());
-			response.setPage(page);
-			response.setTotal(pages.getTotalPages());
-			response.setRecords(pages.getNumberOfElements());
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	response.setRows(pages.getContent());
+		response.setPage(page);
+		response.setTotal(pages.getTotalPages());
+		response.setRecords(pages.getNumberOfElements());
     	
 		return response;
     }
  
     
-    @DeleteMapping(value = "/{id}")
-    public @ResponseBody GenericResponse<?> delete(
+	@DeleteMapping(value = "/{id}")
+    @SuppressWarnings("rawtypes")
+	public @ResponseBody GenericResponse<?> delete(
     		@PathVariable(value="id") String id,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
-    	
-    	GenericResponse<Notice> response = new GenericResponse<Notice>();
-    	
-    	try {
-    		String updUser = userInfo.getUsername();
+   		String updUser = userInfo.getUsername();
     		
-	    	noticeAttachService.disable(Long.valueOf(id), updUser);
-	    	
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	noticeAttachService.disable(Long.valueOf(id), updUser);
     	
-		return response;
+		return new GenericResponse();
     }
     
     
@@ -125,46 +98,13 @@ public class NoticeAttachController {
     		@AuthenticationPrincipal UserInfo userInfo) throws Exception {
 //    		BindingResult result, HttpServletRequest request, HttpServletResponse servletResponse) throws Exception {
 
-logger.info("## resourceDataForm Request :\n"+resourceDataForm);
-    	
-//logger.info("## ExcelGiftForm uploadfile Request :\n"+uploadfile);
-    	
-    	
-		GenericResponse<NoticeAttach> response = new GenericResponse<NoticeAttach>();
+		log.info("## resourceDataForm Request :\n"+resourceDataForm);
 
-		String instUser = "";
-		try{
-			
-    		if(userInfo != null) {
-    			instUser = userInfo.getUsername();
-        	}
-			
-			NoticeAttach resourceData = noticeAttachService.uploadResource(resourceDataForm, instUser);
-			
-			response.setResultValue(resourceData);
-		} catch (ServiceException e) {
-			logger.error("## ServiceException:"+e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( th.getMessage() );
-		}
+		String instUser = userInfo.getUsername();
+		NoticeAttach resourceData = noticeAttachService.uploadResource(resourceDataForm, instUser);
 
-//		servletResponse.setContentType("application/json;charset=UTF-8");
-//		marshal(response, servletResponse.getWriter());
-		
-		return response;
+		return new GenericResponse<NoticeAttach>(resourceData);
     }
-	
-	private void marshal(Object object, Writer outputWriteer) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		objectMapper.writeValue(outputWriteer, object);
-	}
 
 	
 /*	

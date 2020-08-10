@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.milkit.app.common.AppCommon;
 import com.milkit.app.common.AttachInfo;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.common.file.FileSystemStorageServiceImpl;
 import com.milkit.app.common.file.FileUploadProperties;
 import com.milkit.app.domain.notice.Notice;
@@ -18,6 +19,8 @@ import com.milkit.app.domain.notice.dao.NoticeDao;
 import com.milkit.app.domain.notice.dao.NoticeSpec;
 import com.milkit.app.domain.userinfo.UserInfo;
 import com.milkit.app.view.notice.NoticeViewController;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Component
+@Slf4j
 public class NoticeAttachServiceImpl {
-	
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeAttachServiceImpl.class);
 
     @Autowired
     private NoticeAttachDao noticeRepository;

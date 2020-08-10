@@ -14,8 +14,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.milkit.app.common.exception.StorageException;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.service.NoticeAttachServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.annotation.PostConstruct;
@@ -33,19 +35,17 @@ import java.util.stream.Stream;
 
 
 @Service
+@Slf4j
 public class FileSystemStorageServiceImpl {
 
     private final Path rootLocation;
     
     private FileUploadProperties properties;
 	
-    
-    private static final Logger logger  = LoggerFactory.getLogger(FileSystemStorageServiceImpl.class);
 
 
     @Autowired
     public FileSystemStorageServiceImpl(FileUploadProperties properties) throws Exception {
-    	
 //        this.rootLocation = Paths.get(properties.getLocation());
     	this.properties = properties;
         this.rootLocation = Paths.get(properties.getLocation()).toAbsolutePath().normalize();
@@ -75,12 +75,13 @@ logger.debug("\n\n\n"+properties.getLocation()+"\n\n\n\n");
 */
     public String store(MultipartFile file) throws Exception {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        
         try {
             if (file.isEmpty()) {
-                throw new StorageException();
+                throw new Exception();
             }
             if (filename.contains("..")) {
-                throw new StorageException();
+                throw new Exception();
             }
             
 //logger.debug("\n\n\n"+this.rootLocation.resolve(filename).toString()+"\n\n\n");
@@ -92,25 +93,18 @@ logger.debug("\n\n\n"+properties.getLocation()+"\n\n\n\n");
             
             Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-        	
-        	logger.error(e.getMessage(), e);
-
             throw new StorageException();
         }
 
         return filename;
     }
 
-    private boolean isImage(String filename) {
-    	return filename.toLowerCase().matches("image/jpeg|image/png|image/gif") ? true : false;
-    }
     public Stream<Path> loadAll() throws Exception {
         try {
             return Files.walk(this.rootLocation, 1)
                     .filter(path -> !path.equals(this.rootLocation))
                     .map(this.rootLocation::relativize);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException();
         }
 
@@ -126,18 +120,21 @@ logger.debug("\n\n\n"+properties.getLocation()+"\n\n\n\n");
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new FileNotFoundException("파일을 찾을 수 없습니다: " + filename);
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new FileNotFoundException("파일을 읽을 수 없습니다: " + filename);
         }
     }
 
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+    
+    
+    private boolean isImage(String filename) {
+    	return filename.toLowerCase().matches("image/jpeg|image/png|image/gif") ? true : false;
     }
     
 }

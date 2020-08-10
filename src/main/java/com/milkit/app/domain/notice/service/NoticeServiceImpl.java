@@ -3,10 +3,14 @@ package com.milkit.app.domain.notice.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.milkit.app.common.exception.ServiceException;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.Notice;
 import com.milkit.app.domain.notice.dao.NoticeDao;
 import com.milkit.app.domain.notice.dao.NoticeSpec;
 import com.milkit.app.domain.userinfo.UserInfo;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,14 +19,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class NoticeServiceImpl {
 
     @Autowired
     private NoticeDao noticeRepository;
 
     public Page<Notice> selectAll(String useYN, Pageable pageable) throws Exception {
-//        return noticeRepository.findAll(pageable);
-        
         return noticeRepository.findAll(NoticeSpec.withUseYN(useYN), pageable);
     }
 
@@ -33,8 +36,8 @@ public class NoticeServiceImpl {
         if(optionalPost.isPresent()) {
         	notice = optionalPost.get();
         }
-
-        return notice;
+        
+		return notice;
     }
     
     public Long selectSeq() throws Exception {

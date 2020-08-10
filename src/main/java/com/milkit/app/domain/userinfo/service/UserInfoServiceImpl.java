@@ -13,10 +13,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.userinfo.UserInfo;
 import com.milkit.app.domain.userinfo.dao.UserInfoDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class UserInfoServiceImpl implements UserDetailsService {
 
 	@Autowired

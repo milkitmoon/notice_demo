@@ -5,8 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 import com.milkit.app.common.JsonPrinter;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.service.NoticeAttachServiceImpl;
 import com.milkit.app.util.PrintUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SpringBootTest
+@Slf4j
 class NoticeAttachServiceTests {
-
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeAttachServiceTests.class);
 
 	@Autowired
     private NoticeAttachServiceImpl noticeAttachServie;

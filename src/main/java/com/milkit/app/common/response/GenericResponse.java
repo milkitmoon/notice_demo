@@ -32,6 +32,11 @@ public class GenericResponse<T> implements Serializable {
 		this.resultMessage = resultMessage;
 	}
 	
+	public GenericResponse(T t) {
+		this();
+		this.resultValue = t;
+	}
+	
 	
 	public String getResultCode() {
 		return resultCode;

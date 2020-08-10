@@ -6,8 +6,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milkit.app.common.JsonPrinter;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
 import com.milkit.app.util.PrintUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,9 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SpringBootTest
+@Slf4j
 class NoticeServiceTests {
-
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeServiceTests.class);
 
 	@Autowired
     private NoticeServiceImpl noticeServie;
@@ -64,7 +66,7 @@ class NoticeServiceTests {
 		
 		List<Notice> list = selectAll(0, 2);
 		
-		logger.debug("list3:"+list);
+		log.debug("list3:"+list);
 
 		assertTrue(list.size() == 2);
 
@@ -114,7 +116,7 @@ class NoticeServiceTests {
 
 		assertTrue(seq > 0);
 
-		logger.debug("seq:"+seq);
+		log.debug("seq:"+seq);
 	}
 
 	

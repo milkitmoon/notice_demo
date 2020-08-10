@@ -17,13 +17,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
-
 @Table(name = "USER_INFO")
 @Entity
 public class UserInfo implements UserDetails {
  
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -117,20 +114,6 @@ public class UserInfo implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-    
-    
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        if(authRole.equals(Role.ADMIN.getValue())) {
-        	grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-        } else {
-        	grantedAuthorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
-        }
-        
-		return grantedAuthorities;
-	}
 	
 	@Override
 	public String getPassword() {
@@ -162,6 +145,18 @@ public class UserInfo implements UserDetails {
 		return isEnabled;
 	}
 	
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        if(authRole.equals(Role.ADMIN.getValue())) {
+        	grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
+        } else {
+        	grantedAuthorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+        }
+        
+		return grantedAuthorities;
+	}
 	
 	@Override  
 	public String toString() {

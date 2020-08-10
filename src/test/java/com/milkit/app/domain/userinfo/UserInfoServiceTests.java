@@ -5,8 +5,11 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.domain.userinfo.UserInfo;
 import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,9 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SpringBootTest
+@Slf4j
 class UserInfoServiceTests {
-
-	private static final Logger logger  = LoggerFactory.getLogger(UserInfoServiceTests.class);
 
 	@Autowired
     private UserInfoServiceImpl userInfoServie;
@@ -29,7 +31,7 @@ class UserInfoServiceTests {
 
 		UserInfo userInfo = userInfoServie.select(1l);
 
-		logger.debug(userInfo.toString());
+		log.debug(userInfo.toString());
 	}
 	
 	@Test
@@ -39,7 +41,7 @@ class UserInfoServiceTests {
 
 		UserInfo userInfo = userInfoServie.select("test");
 
-		logger.debug(userInfo.toString());
+		log.debug(userInfo.toString());
 	}
 
 
@@ -50,7 +52,7 @@ class UserInfoServiceTests {
 
 		List<UserInfo> list = userInfoServie.selectAll();
 
-		logger.debug("size:"+list.size());
+		log.debug("size:"+list.size());
 	}
 
 	@Test
@@ -62,7 +64,7 @@ class UserInfoServiceTests {
 		UserInfo userInfo = new UserInfo("test", "");
 		Long id = userInfoServie.insert(userInfo);
 
-		logger.debug(id.toString());
+		log.debug(id.toString());
 	}
 
 }

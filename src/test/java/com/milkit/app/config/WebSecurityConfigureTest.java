@@ -11,11 +11,14 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+
+import lombok.extern.slf4j.Slf4j;
+
 
 @SpringBootTest
+@Slf4j
 public class WebSecurityConfigureTest {
-	
-	private static final Logger logger  = LoggerFactory.getLogger(WebSecurityConfigureTest.class);
 
     private PasswordEncoder passwordEncoder;
     
@@ -30,7 +33,7 @@ public class WebSecurityConfigureTest {
  
         String encPassword = passwordEncoder.encode(password);
  
-logger.debug(encPassword);
+        log.debug(encPassword);
         
         assertThat(passwordEncoder.matches(password, encPassword)).isTrue();
 //        assertThat(encPassword).contains("{bcrypt}");

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class TestController {
+public class IndexController {
 
     @RequestMapping("/") 
     public String index() {

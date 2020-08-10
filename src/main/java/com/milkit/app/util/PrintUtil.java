@@ -17,17 +17,15 @@ public class PrintUtil {
     }
 
 
-    public static void print(PrintInterface printer, Class<?> clazz, Object message) throws Exception {
-		printer.print(clazz, message);
+    public static void print(PrintInterface printer, Object message) throws Exception {
+		printer.print(message);
     }
     
-    public static void print(PrintInterface printer, Class<?> clazz, Collection message) throws Exception {
+    public static void print(PrintInterface printer, Collection message) throws Exception {
 		if(printer != null && message != null) {
-			printer.print(clazz, "List size:["+message.size()+"]");
+			printer.print("List size:["+message.size()+"]");
 			for (Iterator e = message.iterator(); e.hasNext();) {
-//				Object obj = e.next();
-//				printer.print(obj.getClass().getInterfaces()[0]);
-				printer.print(clazz, e.next());
+				printer.print(e.next());
 			}
 		}
 	}

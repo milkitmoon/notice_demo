@@ -1,20 +1,17 @@
 package com.milkit.app.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class JsonPrinter implements PrintInterface {
 
     @Override
-    public void print(Class<?> clazz, Object printObj) throws Exception {
-        LoggerFactory.getLogger(clazz);
-
-		ObjectMapper mapper = new ObjectMapper();
-        String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(printObj);
-        
-        LoggerFactory.getLogger(clazz).debug(jsonStr);
+    public void print(Object printObj) throws Exception {
+        log.debug( (new ObjectMapper()).writerWithDefaultPrettyPrinter().writeValueAsString(printObj) );
     }
     
 }

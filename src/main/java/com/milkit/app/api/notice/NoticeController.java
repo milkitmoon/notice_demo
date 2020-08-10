@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.milkit.app.common.ErrorCode;
 import com.milkit.app.common.exception.ServiceException;
+import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
 import com.milkit.app.common.response.GenericResponse;
 import com.milkit.app.common.response.GridResponse;
 import com.milkit.app.domain.notice.Notice;
@@ -31,12 +32,13 @@ import com.milkit.app.domain.userinfo.UserInfo;
 
 import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/api/notice")
+@Slf4j
 public class NoticeController {
-	
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeController.class);
 
     @Autowired
     private NoticeServiceImpl noticeService;
@@ -48,27 +50,13 @@ public class NoticeController {
 			@RequestParam(value="useYN", defaultValue="Y", required=false) String useYN
 			) throws Exception {
     	Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(limit));
+    	Page<Notice> pages = noticeService.selectAll(useYN, pageable);
     	
     	GridResponse<Notice> response = new GridResponse<Notice>();
-    	
-    	try {
-	    	Page<Notice> pages = noticeService.selectAll(useYN, pageable);
-	    	
-	    	response.setRows(pages.getContent());
-			response.setPage(page);
-			response.setTotal(pages.getTotalPages());
-			response.setRecords(pages.getNumberOfElements());
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	response.setRows(pages.getContent());
+		response.setPage(page);
+		response.setTotal(pages.getTotalPages());
+		response.setRecords(pages.getNumberOfElements());
     	
 		return response;
     }
@@ -77,124 +65,58 @@ public class NoticeController {
     public @ResponseBody GenericResponse<Notice> notice(
     		@PathVariable(value="id") String id
 			) throws Exception {
-    	GenericResponse<Notice> response = new GenericResponse<Notice>();
+   	
+    	Notice notice = noticeService.select(Long.valueOf(id));
     	
-    	try {
-	    	Notice notice = noticeService.select(Long.valueOf(id));
-	    	response.setResultValue(notice);
-	    	
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
-    	
-		return response;
+		return new GenericResponse<Notice>(notice);
     }
     
-    @PostMapping
-    public @ResponseBody GenericResponse<Notice> insert(
+	@PostMapping
+	@SuppressWarnings("rawtypes")
+    public @ResponseBody GenericResponse<?> insert(
 			@RequestBody final Notice notice,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
     	
     	GenericResponse<Notice> response = new GenericResponse<Notice>();
     	
-//logger.debug(notice.toString());
-    	
-    	try {
-    		if(userInfo != null) {
-    	        notice.initNotice(userInfo.getUsername());
-        	}
+   		if(userInfo != null) {
+   	        notice.initNotice(userInfo.getUsername());
+       	}
     		
-//notice.initNotice("test");
-    		
-	    	Long id = noticeService.insert(notice);
-	    	
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	Long id = noticeService.insert(notice);
     	
-		return response;
+		return new GenericResponse();
     }
     
     @PutMapping
-    public @ResponseBody GenericResponse<Notice> update(
+    @SuppressWarnings("rawtypes")
+    public @ResponseBody GenericResponse<?> update(
 			@RequestBody final Notice notice,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
     	
-    	GenericResponse<Notice> response = new GenericResponse<Notice>();
-    	
-//logger.debug(notice.toString());
-    	
-    	try {
-    		if(userInfo != null) {
-    	        notice.setUpdUser(userInfo.getUsername());
-        	}
+    	if(userInfo != null) {
+    		notice.setUpdUser(userInfo.getUsername());
+    	}
     		
-//notice.initNotice("test");
-    		
-	    	Integer updateCnt = noticeService.update(notice);
-	    	
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	Integer updateCnt = noticeService.update(notice);
     	
-		return response;
+    	return new GenericResponse();
     }
     
     @DeleteMapping(value = "/{id}")
+    @SuppressWarnings("rawtypes")
     public @ResponseBody GenericResponse<?> delete(
     		@PathVariable(value="id") String id,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
     	
-    	GenericResponse<Notice> response = new GenericResponse<Notice>();
-    	
-    	try {
-    		String updUser = "test";
-    		if(userInfo != null) {
-    	        updUser = userInfo.getUsername();
-        	}
+   		String updUser = userInfo.getUsername();
     		
-	    	noticeService.disable(Long.valueOf(id), updUser);
-	    	
-    	} catch (ServiceException e) {
-			logger.error(e.getMessage(), e);
-			
-			response.setResultCode( Integer.toString(e.getCode()) );
-			response.setResultMessage( e.getMessage() );
-		} catch (Throwable th) {
-			logger.error(th.getMessage(), th);
-			
-			response.setResultCode( Integer.toString(ErrorCode.SystemError) );
-			response.setResultMessage( "시스템 오류입니다." );
-		}
+    	noticeService.disable(Long.valueOf(id), updUser);
     	
-		return response;
+    	return new GenericResponse();
     }
     
 }

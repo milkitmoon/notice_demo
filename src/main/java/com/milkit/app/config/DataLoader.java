@@ -45,7 +45,6 @@ public class DataLoader implements ApplicationRunner {
 			userInfoService.insert(userInfo);
 			userInfoService.insert(userInfo2);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
