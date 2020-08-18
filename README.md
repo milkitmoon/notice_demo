@@ -38,8 +38,7 @@
 
 <img src="https://user-images.githubusercontent.com/61044774/85550736-34f5ec80-b65c-11ea-865b-981c6b72f2b9.jpg" width="90%"></img>
 
----
-
+> Tips 
 - 만약 lombok 관련 오류가 발생하면 아래의 url을 참조해 주세요
 [https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts](https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts)
 [https://countryxide.tistory.com/16](https://countryxide.tistory.com/16)
