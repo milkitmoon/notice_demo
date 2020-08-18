@@ -6,12 +6,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milkit.app.common.JsonPrinter;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
 import com.milkit.app.util.PrintUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -32,38 +34,18 @@ class NoticeServiceTests {
     private NoticeServiceImpl noticeServie;
 
 
-
-	@Test
-	public void Notice_테스트() throws Exception {
-		Long id = insert(sequence(), "title1", "contents1", "kim");
-		assertTrue(id > 0);
-		
-		Notice notice = noticeServie.select(id);
-		assertTrue(notice != null);
-		
-		update(id, "title2", "contents2", "kim");
-		Notice updateNotice = noticeServie.select(id);
-		assertTrue(updateNotice.getTitle().equals("title2"));
-
-		delete(id, "test");
-		Notice deleteNotice = noticeServie.select(id);
-		assertTrue(deleteNotice.getUseYN().equals("N"));
-		
-		List<Notice> list = selectAll(0, 100);
-		assertTrue(list.size() == 0);
-
-		전체조회_테스트();
+	@BeforeEach
+	public void init() throws Exception {
+		noticeServie.insert(new Notice(noticeServie.selectSeq(), "title1", "contents1", "kim"));
+		noticeServie.insert(new Notice(noticeServie.selectSeq(), "title2", "contents2", "kim"));
+		noticeServie.insert(new Notice(noticeServie.selectSeq(), "title3", "contents3", "kim"));
 	}
+
 
 
 	
 	@Test
 	public void 전체조회_테스트() throws Exception {
-
-		등록_테스트();
-		등록_테스트();
-		등록_테스트();
-		
 		List<Notice> list = selectAll(0, 2);
 		
 		log.debug("list3:"+list);
@@ -74,37 +56,35 @@ class NoticeServiceTests {
 
 	@Test
 	public void 단일조회_테스트() throws Exception {
-		Long id = insert(sequence(), "title1", "contents1", "kim");
-		
-		Notice notice = noticeServie.select(id);
+		Notice notice = noticeServie.select(1L);
 
 		assertTrue(notice != null);
 	}
 
 	@Test
 	public void 등록_테스트() throws Exception {
-		Long id = insert(sequence(), "title1", "contents1", "kim");
+		Long id = noticeServie.insert(new Notice(noticeServie.selectSeq(), "title1", "contents1", "kim"));
 
 		assertTrue(id > 0);
 	}
 	
 	@Test
 	public void 갱신_테스트() throws Exception {
-		Long id = insert(sequence(), "title1", "contents1", "kim");
+		long id = 1L;
 		
-		update(id, "title2", "contents2", "kim");
+		noticeServie.update(new Notice(id, "title2", "contents2", "kim"));
 		
 		Notice notice = noticeServie.select(id);
 
 		assertTrue(notice.getTitle().equals("title2"));
+		assertTrue(notice.getContent().equals("contents2"));
 	}
 	
 	@Test
 	public void 삭제_테스트() throws Exception {
-		Long id = insert(sequence(), "title1", "contents1", "kim");
-		delete(id, "test");
+		noticeServie.disable(1L, "test");
 		
-		Notice notice = noticeServie.select(id);
+		Notice notice = noticeServie.select(1L);
 
 		assertTrue(notice.getUseYN().equals("N"));
 	}
@@ -112,7 +92,7 @@ class NoticeServiceTests {
 	
 	@Test
 	public void sequence조회_테스트() throws Exception {
-		Long seq = sequence();
+		Long seq = noticeServie.selectSeq();
 
 		assertTrue(seq > 0);
 
@@ -120,31 +100,13 @@ class NoticeServiceTests {
 	}
 
 	
-	
-	private Long sequence() throws Exception {
-		return noticeServie.selectSeq();
-	}
+
 	
 	private List<Notice> selectAll(int page, int size) throws Exception {
 		Pageable firstPageWithTwoElements = PageRequest.of(page, size);
 		Page<Notice> pages = noticeServie.selectAll("Y", firstPageWithTwoElements);
 
 		return pages.getContent();
-	}
-	
-	private Long insert(Long id, String title, String content, String instUser) throws Exception {
-		Notice notice = new Notice(id, title, content, instUser);
-		return noticeServie.insert(notice);
-	}
-	
-	private void update(Long id, String title, String content, String instUser) throws Exception {
-		Notice notice = new Notice(id, title, content, instUser);
-		
-		noticeServie.update(notice);
-	}
-	
-	private void delete(Long id, String updUser) throws Exception {
-		noticeServie.disable(id, updUser);
 	}
 
 }

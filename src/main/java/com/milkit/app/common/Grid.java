@@ -14,12 +14,18 @@ import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 public class Grid {
 
+	@ApiModelProperty(value="현재Page 번호", notes="기본값 (1)")
 	private String page = "1";
+	@ApiModelProperty(value="전체Page 갯수")
 	private String total = "0";
+	@ApiModelProperty(value="전체 record 갯수")
 	private String records = "0";
+	@ApiModelProperty(value="record의 결과값", notes="형식 (List)")
 	protected List rows;
 	
 	public Grid() {
@@ -48,8 +54,6 @@ public class Grid {
 		this.records = records;
 	}
 	
-//	@JsonIgnore
-//	@XmlElement
 	public List getRows() {
 		return rows;
 	}

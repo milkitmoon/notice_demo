@@ -64,8 +64,6 @@ var RESULT_CODE_OK = "0";
 var $ = jQuery.noConflict();
 
 function logOut() {
-	//$.session.clear();
-//	location.href = contextPath + "/login/logout.do";
 	location.href = contextPath + "/logout";
 }
 

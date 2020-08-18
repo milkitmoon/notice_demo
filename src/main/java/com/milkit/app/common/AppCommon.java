@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class AppCommon {
 	
-	
 	private static AppCommon singleInstance;
 	
 	private AppCommon() {}

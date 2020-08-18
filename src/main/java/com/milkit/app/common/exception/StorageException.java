@@ -17,5 +17,9 @@ public class StorageException extends ServiceException {
 	public StorageException(long filesize) {
 		super(code, "파일저장 시 오류가 발생했습니다.", new Object[]{filesize});
 	}
+	
+	public StorageException(String message) {
+		super(code, message);
+	}
 
 }

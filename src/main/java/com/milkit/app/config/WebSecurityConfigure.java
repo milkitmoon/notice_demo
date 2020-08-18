@@ -28,37 +28,29 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserInfoServiceImpl userInfoService;
 
-/*
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**").anyRequest();
-    }
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/**").permitAll();
-    }
-*/
 	
-
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
         		"/resources/**",
         		"/uploads/**",
-        		"/h2-console/**"
+        		"/h2-console/**",
+        		
+        		"/v2/api-docs", 
+        		"/configuration/ui",
+                "/swagger-resources/**", 
+                "/swagger-ui.html", 
+                "/webjars/**",
+                "/swagger/**"
         	);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests().antMatchers("/**").permitAll();
+//        http.authorizeRequests().antMatchers("/**").permitAll();	//just for test
 
         http
         .authorizeRequests()
-        	.antMatchers("/uploads/**").permitAll()
-        	.antMatchers("/h2-console/**").permitAll()
         	.anyRequest().authenticated()
             .and()
         .formLogin()
@@ -75,9 +67,9 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     
     
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new StandardPasswordEncoder();
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+        return new StandardPasswordEncoder();	//SHA-256
 //        return new BCryptPasswordEncoder();
     }
     

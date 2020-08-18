@@ -3,27 +3,35 @@ package com.milkit.app.api.userinfo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.api.AbstractApiController;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
+import com.milkit.app.common.response.GenericResponse;
 import com.milkit.app.domain.userinfo.UserInfo;
 import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 
-@RestController
 @Slf4j
-public class UserInfoController {
+@RestController
+@Api(tags = "3. 사용자 정보", value = "UserInfoController")
+public class UserInfoController extends AbstractApiController {
 
     @Autowired
     private UserInfoServiceImpl memberServie;
 
-    @RequestMapping("/api/userinfo")
-    public List<UserInfo> userinfo(@RequestParam(value="name", defaultValue="World") String name) throws Exception {
-        return memberServie.selectAll();
+    @GetMapping("/api/userinfo")
+    @ApiOperation(value = "사용자정보 전체조회", notes = "사용자정보 전체 목록을 조회한다.")
+    public ResponseEntity<List<UserInfo>> userinfo() throws Exception {
+        return apiResponse(() -> memberServie.selectAll());
     }
     
 }

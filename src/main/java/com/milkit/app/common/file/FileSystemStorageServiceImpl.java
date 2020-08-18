@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.milkit.app.common.exception.StorageException;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.service.NoticeAttachServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,44 +57,24 @@ public class FileSystemStorageServiceImpl {
         }
     }
 
-
-/*
-    public FileSystemStorageServiceImpl() throws Exception {
-    	
-logger.debug("\n\n\n"+properties.getLocation()+"\n\n\n\n");
-    	
-        this.rootLocation = Paths.get(properties.getLocation());
-//        this.rootLocation = Paths.get(uploadfileLocation).toAbsolutePath().normalize();
-        
-        try {
-            Files.createDirectories(rootLocation);
-        } catch (IOException e) {
-            throw new StorageException();
-        }
-    }
-*/
     public String store(MultipartFile file) throws Exception {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         
-        try {
-            if (file.isEmpty()) {
-                throw new Exception();
-            }
-            if (filename.contains("..")) {
-                throw new Exception();
-            }
-            
-//logger.debug("\n\n\n"+this.rootLocation.resolve(filename).toString()+"\n\n\n");
-			if(isImage(file.getContentType())) {
-	            Thumbnails.of(file.getInputStream())
-	            .size(200, 200)
-	    		.toFile(new File(this.rootLocation.resolve(properties.getThumnailPrefix()+filename).toString()));
-			}
-            
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception e) {
-            throw new StorageException();
+
+        if (file.isEmpty()) {
+        	throw new StorageException("업로드 파일이 존재하지 않습니다.");
         }
+        if (filename.contains("..")) {
+        	throw new StorageException("업로드 파일명 형식이 올바르지 않습니다.");
+        }
+            
+		if(isImage(file.getContentType())) {
+            Thumbnails.of(file.getInputStream())
+            .size(200, 200)
+    		.toFile(new File(this.rootLocation.resolve(properties.getThumnailPrefix()+filename).toString()));
+		}
+            
+		Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
 
         return filename;
     }

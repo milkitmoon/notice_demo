@@ -16,37 +16,56 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Table(name = "USER_INFO")
 @Entity
+@ApiModel
 public class UserInfo implements UserDetails {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(value="UserInfo의 키ID")
     private Long id;
     
     @Column(name = "USER_ID")
+    @ApiModelProperty(value="사용자계정 ID")
     private String userID;
     
     @Column(name = "PASSWORD")
+    @ApiModelProperty(value="사용자계정 비밀번호")
     private String password;
 
     @Column(name = "USER_NM")
+    @ApiModelProperty(value="사용자명")
     private String userNM;
 
     @Column(name = "AUTH_ROLE")
+    @ApiModelProperty(value="사용자 권한", notes="(ROLE_MEMBER:사용자, ROLE_ADMIN:관리자)")
     private String authRole;
     
     @Column(name = "USE_YN")
+    @ApiModelProperty(value="사용자 삭제여부")
     private String useYN;
     
     @Column(name = "INST_TIME")
+    @ApiModelProperty(value="사용자 등록시간")
     private Date instTime;
+    
     @Column(name = "UPD_TIME")
+    @ApiModelProperty(value="사용자 갱신시간")
     private Date updTime;
+    
     @Column(name = "INST_USER")
+    @ApiModelProperty(value="사용자 등록자")
     private String instUser;
+    
     @Column(name = "UPD_USER")
+    @ApiModelProperty(value="사용자 갱신자")
     private String updUser;
 
 
@@ -120,22 +139,27 @@ public class UserInfo implements UserDetails {
 		return password;
 	}
 	@Override
+	@JsonIgnore
 	public String getUsername() {
 		return userID;
 	}
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 	@Override
+	@JsonIgnore
 	public boolean isEnabled() {
 		boolean isEnabled = false;
 		
@@ -145,8 +169,8 @@ public class UserInfo implements UserDetails {
 		return isEnabled;
 	}
 	
-
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         if(authRole.equals(Role.ADMIN.getValue())) {

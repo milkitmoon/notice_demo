@@ -27,14 +27,10 @@ function clearGrid(targetGrid) {
 }
 
 function updateSize(){
-    //getting all lines in two tables by they id
     var lines = $("tr", this),
         flines = $("tr", "#"+$(this).attr("id")+"_frozen" );
 
-    //setting in all frozen lines height equel to grid
     flines.each(function(i, item){
-
-        //i%2 check because of border collapse
         $(item).height( $(lines[i]).innerHeight() - (i%2?1:0) );
     });
 }
@@ -49,8 +45,6 @@ function adjustHeight(grid, maxHeight) {
 	var initMarginWidth = 80;
 	var headerHeight = $("thead:first tr.ui-jqgrid-labels", $(grid)[0].grid.hDiv).height();
 	
-//	marginHeight = round(Math.abs(initMarginWidth - (headerHeight*(headerHeight*0.101))), 1);
-//	marginHeight = Math.abs(headerHeight-(headerHeight*0.210));
 	marginHeight = Math.abs(headerHeight-(headerHeight*0.290));
 	jQuery(grid).jqGrid('setGridHeight', Math.min( maxHeight, (parseInt(jQuery(".ui-jqgrid-btable").css('height'))+marginHeight) ));
 }
@@ -115,17 +109,16 @@ alert("fittingOpt:"+fittingOpt+"	div_id:"+div_id+"	resizingWidth:"+resizingWidth
 function resizeJqGridWidth(grid_id, div_id, isShrinkToFit) {
 	if( (grid_id != null && typeof grid_id != 'undefined') && (div_id != null && typeof div_id != 'undefined') ) {
 		if(typeof isShrinkToFit == 'undefined' || isShrinkToFit != false) {
-//alert(isShrinkToFit);
 			var resizingWidth = $('#' + div_id).width();
 		   	if( resizingWidth != null && (typeof resizingWidth != 'undefined') ) {
-		   		$('#' + grid_id).setGridWidth(resizingWidth, true); //Resized to new width as per window
+		   		$('#' + grid_id).setGridWidth(resizingWidth, true);
 		   	}
 		} else {
 			$('#' + grid_id).jqGrid('setGridParam',{shrinkToFit:isShrinkToFit});
 			
 		   	var resizingWidth = $('#' + div_id).width();
 		   	if( resizingWidth != null && (typeof resizingWidth != 'undefined') ) {
-		   		$('#' + grid_id).setGridWidth(resizingWidth, false); //Resized to new width as per window
+		   		$('#' + grid_id).setGridWidth(resizingWidth, false);
 		   	}
 		}
 	}
@@ -159,7 +152,6 @@ function getGridJsonExport(curGrid) {
 }
 
 function getFooterData(curGrid) {
-//	return $(curGrid).footerData('get');
 	return $(curGrid).jqGrid('footerData','get');
 }
 
@@ -202,14 +194,9 @@ function getGridDataByIds(curGrid, gridIDs) {
 
 function setLocalDataType(grid, data) {
     var $this = $(grid);
-    // null일때 스크립트 오류라 추가함...
+    
     if (data.rows ==  null) data.rows = "";
     
-/*    alert("rows : " + data.rows + "\n" +
-    		"page : " + data.page + "\n" +
-    		"records : " + data.records + "\n" +
-    		"total : " + data.total + "\n");*/
-    		
     if ($this.jqGrid('getGridParam', 'datatype') === 'json') {
         $this.jqGrid('setGridParam', {
             datatype: 'local',
@@ -237,14 +224,9 @@ function setLocalDataType(grid, data) {
 
 function setLocalDataType2(grid, data) {
     var $this = $(grid);
-    // null일때 스크립트 오류라 추가함...
+
     if (data.rows ==  null) data.rows = "";
     
-/*    alert("rows : " + data.rows + "\n" +
-    		"page : " + data.page + "\n" +
-    		"records : " + data.records + "\n" +
-    		"total : " + data.total + "\n");*/
-    		
     if ($this.jqGrid('getGridParam', 'datatype') === 'json') {
         $this.jqGrid('setGridParam', {
             datatype: 'local',
@@ -264,10 +246,6 @@ function setLocalDataType2(grid, data) {
         });
         grid.updatepager(false, true);
     }
-	
-}
-
-function setFooterSummary(grid, hapColname) {
 	
 }
 
@@ -452,7 +430,6 @@ function percentFormat(cellval, opts, rwdat, act) {
     }
      
     var percentVar = round(cellval, 2);
-//	var percentVar = ceiling(cellval, 2);
 
      if(percentVar > 100) {
     	 percentVar = 100;
@@ -465,14 +442,12 @@ function percentFormat(cellval, opts, rwdat, act) {
      		'</span>';
 }
 
-//% 및 공백제거
 function percentUnFormat(cellvalue, options, cell) {
 	return $('span', cell).text().replace( /%/g, '' ).replace(/(^\s*)|(\s*$)/gi, "");
 }
 
 function formatPhoneNumber(cellvalue, options, rowObject) { 
 	
-//    var re = new RegExp("([0-9])([0-9]{3})([0-9]{3})([0-9]{3,6})", "g");
 	if(cellvalue != null && cellvalue != '' && cellvalue != 'null') {
 		cellvalue=cellvalue.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9,*]+)([0-9]{4})/,"$1-$2-$3");
 	} else {
@@ -508,15 +483,6 @@ function cardNumberHyphenFormat(cellval, opts, rwdat, act) {
 	if(cellval != null && cellval != '' && cellval != 'undefined') {
 		var pattern1 = /(^\d{4}|^\d{4}-\d{3}|^\d{4}-\d{3}-\d{7})(\d+)/;
 		
-/*
-		strTempThisValue = cellval;
-		while(/[-]/.test(strTempThisValue)){
-			strTempThisValue = strTempThisValue.replace("-","");
-		}
-		while(pattern1.test(strTempThisValue)){
-			strTempThisValue = strTempThisValue.replace(pattern1,"$1"+"-"+"$2");
-		}
-*/
 		strTempThisValue = cellval.split("-").join(""); // remove hyphens
 		strTempThisValue = strTempThisValue.match(new RegExp('.{1,4}', 'g')).join("-");
 	}
@@ -587,7 +553,6 @@ function editInputCellFormatter(cellValue, options, rowdata, action) {
 		borderWidth = columnProp.width-10;
 	}
 	
-//alert(borderWidth);
 	return '<span style="display:block; border:1px solid #e0e0e0; border-style: solid; background:#f0f0f0; width:'+borderWidth+'px; padding-left: 10px; padding-right: 10px; " >'+cellValue+'</span>';
 }
 
@@ -611,5 +576,4 @@ function emphFormatter(cellValue, options, rowdata, action) {
 
 function emphUNFormatter(cellvalue, options, cell) {
 	return $(cell).text();
-//	return cellvalue;
 }

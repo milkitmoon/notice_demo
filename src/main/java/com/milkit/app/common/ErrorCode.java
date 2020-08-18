@@ -26,6 +26,7 @@ public class ErrorCode {
 	public static final int LoginParameterException = 704;
 	public static final int LoginPasswordNotMatchException = 705;
 	public static final int LoginUserNotValidException = 706;
+	public static final int UnauthorizedException = 707;
 	
 	//DB관련 오류
 	public static final int SQLParameterException = 881;
@@ -45,13 +46,6 @@ public class ErrorCode {
 	
 	//시스템 오류
 	public static final int SystemError = 999;
-
-
-
-
-
-	
-
 
 
 	protected static Map<Integer, String> errmsg = new HashMap<Integer, String>();

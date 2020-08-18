@@ -37,7 +37,5 @@ public class FileUploadProperties {
 	public void setThumnailPrefix(String thumnailPrefix) {
 		this.thumnailPrefix = thumnailPrefix;
 	}
-    
-
         
 }

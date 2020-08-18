@@ -14,9 +14,7 @@ public class IndexController {
     @RequestMapping("/") 
     public String index() {
         ModelAndView mav = new ModelAndView("index"); 
-        mav.addObject("name", "moon"); 
         
-//        return mav;
         return "redirect:main";
     }
 

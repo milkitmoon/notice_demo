@@ -11,7 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +36,5 @@ public class WebSecurityConfigureTest {
         log.debug(encPassword);
         
         assertThat(passwordEncoder.matches(password, encPassword)).isTrue();
-//        assertThat(encPassword).contains("{bcrypt}");
     }
 }

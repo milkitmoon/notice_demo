@@ -33,9 +33,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3'
 	runtimeOnly 'com.h2database:h2'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.springframework.security:spring-security-test'
 	
@@ -48,7 +47,10 @@ dependencies {
     compile("net.coobird:thumbnailator:0.4.8")
     compile("org.projectlombok:lombok:1.18.12")
     
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    
+    annotationProcessor("org.projectlombok:lombok:1.18.12")
 }
 
 test {

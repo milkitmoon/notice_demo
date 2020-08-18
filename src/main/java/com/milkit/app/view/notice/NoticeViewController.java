@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.milkit.app.api.notice.NoticeController;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
 import com.milkit.app.domain.userinfo.UserInfo;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class NoticeViewController {
-	
-	private static final Logger logger  = LoggerFactory.getLogger(NoticeViewController.class);
 	
 	@Autowired
     private NoticeServiceImpl noticeServie;
 
     @RequestMapping("/main") 
     public ModelAndView main(@AuthenticationPrincipal UserInfo userInfo) {
-       
         ModelAndView mav = new ModelAndView("notice/main"); 
         
         return mav;
@@ -41,17 +41,11 @@ public class NoticeViewController {
         ModelAndView mav = new ModelAndView("notice/read");
         mav.addObject("id", id);
         
-//	        mav.addObject(userInfo.getClass().getSimpleName(), userInfo);
-        
         return mav;
     }
     
     @RequestMapping("/write")
     public ModelAndView write(@AuthenticationPrincipal UserInfo userInfo) throws Exception {
-       
-//logger.debug("\n\n\n\n"+userInfo.toString()+"\n\n\n");
-    	
-    	
         Long id = noticeServie.selectSeq();
 
         ModelAndView mav = new ModelAndView("notice/write");

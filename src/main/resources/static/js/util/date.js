@@ -1,19 +1,4 @@
-﻿/**
-* 날짜관련 자바스크립트 공통함수
-*
-* 분단위 이하(= 초)는 고려하지 않았습니다.
-* YYYYMMDDHHMI 형식의 String => 'Time'으로 칭함
-*
-* 주로 YYYYMMDD 까지만 쓰인다면 아래 함수들을
-* YYYYMMDD 형식의 String => 'Date'로 하여 적당히
-* 수정하시거나 아니면 함수를, 예를들어 isValidDate()처럼,
-* 추가하시기 바랍니다.
-*
-* @version 2.0, 2001/01/28
-* @author 박종진(JongJin Park), jongjpark@lgeds.lg.co.kr
-*/
-
-
+﻿
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
  
@@ -42,9 +27,6 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 
-/**
-* 마지막 날짜 리턴
-*/
 
 function lastdayOfMonth(calyear, calmonth) {
     var  dayOfMonth  = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
@@ -62,9 +44,6 @@ function firstDayOfMonth(date) { //moveTime(time,y,m,d,h)
     return date;
 }
 
-/**
-* 해당달의 날짜리스트 리턴
-*/
 
 function dayListOfMonth(calyear, calmonth) {
 	var lastDay = lastdayOfMonth(calyear, calmonth);
@@ -553,16 +532,6 @@ function getCurrentTime() {
 * 현재 시각과 y년 m월 d일 h시 차이나는 Time을 리턴
 */
 function getRelativeTime(y,m,d,h) {
-/*
-    var date = new Date();
-
-    date.setFullYear(date.getFullYear() + y); //y년을 더함
-    date.setMonth(date.getMonth() + m);       //m월을 더함
-    date.setDate(date.getDate() + d);         //d일을 더함
-    date.setHours(date.getHours() + h);       //h시를 더함
-
-    return toTimeString(date);
-*/
     return shiftTime(getCurrentTime(),y,m,d,h);
 }
 
@@ -571,31 +540,11 @@ function getRelativeTime(y,m,d,h) {
 * 현재 시각과 y년 m월 d일 h시 차이나는 Time을 리턴
 */
 function getRelativeTime(y,m,d,h,min) {
-/*
-    var date = new Date();
-
-    date.setFullYear(date.getFullYear() + y); //y년을 더함
-    date.setMonth(date.getMonth() + m);       //m월을 더함
-    date.setDate(date.getDate() + d);         //d일을 더함
-    date.setHours(date.getHours() + h);       //h시를 더함
-
-    return toTimeString(date);
-*/
     return shiftTimeMin(getCurrentTime(),y,m,d,h,min);
 }
 
 
 function getRelativeDate(y,m,d,h,min) {
-/*
-    var date = new Date();
-
-    date.setFullYear(date.getFullYear() + y); //y년을 더함
-    date.setMonth(date.getMonth() + m);       //m월을 더함
-    date.setDate(date.getDate() + d);         //d일을 더함
-    date.setHours(date.getHours() + h);       //h시를 더함
-
-    return toTimeString(date);
-*/
     return shiftTimeMinToDate(getCurrentTime(),y,m,d,h,min);
 }
 
@@ -603,10 +552,6 @@ function getRelativeDate(y,m,d,h,min) {
 * 현재 年을 YYYY형식으로 리턴
 */
 function getYear() {
-/*
-    var now = new Date();
-    return now.getFullYear();
-*/
     return getCurrentTime().substr(0,4);
 }
 
@@ -614,14 +559,6 @@ function getYear() {
 * 현재 月을 MM형식으로 리턴
 */
 function getMonth() {
-/*
-    var now = new Date();
-
-    var month = now.getMonth() + 1; // 1월=0,12월=11이므로 1 더함
-    if (("" + month).length == 1) { month = "0" + month; }
-
-    return month;
-*/
     return getCurrentTime().substr(4,2);
 }
 
@@ -630,14 +567,6 @@ function getMonth() {
 
 */
 function getDay() {
-/*
-    var now = new Date();
-
-    var day = now.getDate();
-    if (("" + day).length == 1) { day = "0" + day; }
-
-    return day;
-*/
     return getCurrentTime().substr(6,2);
 }
 
@@ -645,14 +574,6 @@ function getDay() {
 * 현재 時를 HH형식으로 리턴
 */
 function getHour() {
-/*
-    var now = new Date();
-
-    var hour = now.getHours();
-    if (("" + hour).length == 1) { hour = "0" + hour; }
-
-    return hour;
-*/
     return getCurrentTime().substr(8,2);
 }
 
@@ -727,8 +648,6 @@ function getMinList() {
 	}
 	
     return minList;
-//	return new Array("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"
-//			,"21","22","23","24","25","26","27","28","29","30","31","32","33","44","15","16","17","18","19","20");
 }
 
 //DATE 형식 체크 함수
@@ -743,9 +662,7 @@ function fncChkDate(obj) {
 	sPatt = /\./g; sDate = sDate.replace(sPatt,"");
 
 	if (sDate == "") {
-		//alert("날짜를 입력 해 주세요.");
 		$(obj).val("");
-		//$(obj).focus();
 		return "";
 	}
 	

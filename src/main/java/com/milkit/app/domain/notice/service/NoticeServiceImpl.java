@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.milkit.app.common.exception.ServiceException;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 import com.milkit.app.domain.notice.Notice;
 import com.milkit.app.domain.notice.dao.NoticeDao;
 import com.milkit.app.domain.notice.dao.NoticeSpec;

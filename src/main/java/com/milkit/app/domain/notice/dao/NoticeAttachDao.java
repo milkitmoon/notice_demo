@@ -19,21 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface NoticeAttachDao extends JpaRepository<NoticeAttach, Long>, JpaSpecificationExecutor<NoticeAttach>  {
  
-	@Query(value = "SELECT NOTICE_BULLETIN_SEQ.NEXTVAL FROM dual", nativeQuery = true)
-    public Long getSeqNextVal();
-	
-/*
-	@Transactional
-	@Modifying
-	@Query(value="UPDATE Notice SET TITLE = :title, CONTENT = :content, UPD_TIME = now(), UPD_USER = :updUser WHERE ID = :id", nativeQuery=false)
-	Integer update(@Param("title") String title, @Param("content") String content, @Param("updUser") String updUser, @Param("id") Long id);
-*/
-
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE NoticeAttach SET USE_YN = 'N', UPD_TIME = now(), UPD_USER = :updUser WHERE ID = :id", nativeQuery=false)
 	public Integer disable(@Param("id") Long id, @Param("updUser") String updUser);
-
 
 
 }

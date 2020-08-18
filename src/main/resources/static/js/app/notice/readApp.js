@@ -33,28 +33,22 @@ function initInfo(id) {
 	initAttachFiles(id);
 }
 
+
 function initAttachFiles(id) {
-	$.ajax({
-		url:contextPath+'/api/noticeattach/'+id+"?page=1&rows=1000&useYN=Y",
-		cache: false,
-		contentType: "application/json;charset=UTF-8",
-		type: 'GET',
-	    success: function(response)
-	    {
-	    	var noticeattachArray = response.rows;
-	    	if(typeof noticeattachArray != 'undefined' && noticeattachArray != null) {
-		    	for(var i=0; i<noticeattachArray.length; i++) {
-		    		$("#attachFiles").prepend($("<a href='"+noticeattachArray[i].url+"' target='_blank' style='padding:0 5px 0 0'>"+ noticeattachArray[i].filename+"</a>"));
+	fncJsonRequest(contextPath+'/api/noticeattach/'+id+"?page=1&rows=1000&useYN=Y", 'GET', null,   
+		function(response) {
+			if (response.resultCode == RESULT_CODE_OK) {
+		    	var noticeattachArray = response.rows;
+		    	if(typeof noticeattachArray != 'undefined' && noticeattachArray != null) {
+			    	for(var i=0; i<noticeattachArray.length; i++) {
+			    		$("#attachFiles").prepend($("<a href='"+noticeattachArray[i].url+"' target='_blank' style='padding:0 5px 0 0'>"+ noticeattachArray[i].filename+"</a>"));
+			    	}
 		    	}
-	    	}
-	    	
-	    },
-	    error: function(x, e)
-	    {
-	         alert("state:"+x.readyState + "\nstatus:"+ x.status +"	message:"+ e.msg);   
-	    }
-	
-	});
+			} else {
+				alert(response.resultMessage);
+			}
+		}
+	);
 }
 
 function validateNotice() {

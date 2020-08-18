@@ -1,53 +1,39 @@
 
-var xmlHttp;
-var RESULT_OK = 0;
 
-function fncJsonPost(url, userJSON) {
-	xmlHttp = createXMLHttpRequest();
-	xmlHttp.open("POST", url, true);
-	xmlHttp.onreadystatechange = handleStateChange;
-//	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlHttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-//	xmlHttp.setRequestHeader("Content-type", "application/json");
-	
-	xmlHttp.send(userJSON);
+function fncJsonPost(url, userJSON, handleResponse) {
+	fncJsonRequest(url, "POST", userJSON, handleResponse);
 }
 
-function fncJsonPut(url, userJSON) {
-	xmlHttp = createXMLHttpRequest();
-	xmlHttp.open("PUT", url, true);
-	xmlHttp.onreadystatechange = handleStateChange;
-//	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlHttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-//	xmlHttp.setRequestHeader("Content-type", "application/json");
-	
-	xmlHttp.send(userJSON);
+function fncJsonPut(url, userJSON, handleResponse) {
+	fncJsonRequest(url, "PUT", userJSON, handleResponse);
 }
 
-function fncJsonDelete(url) {
-	xmlHttp = createXMLHttpRequest();
-	xmlHttp.open("DELETE", url, true);
-	xmlHttp.onreadystatechange = handleStateChange;
-//	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlHttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-//	xmlHttp.setRequestHeader("Content-type", "application/json");
-	
-	xmlHttp.send();
+function fncJsonDelete(url, handleResponse) {
+	fncJsonRequest(url, "DELETE", null, handleResponse);
 }
 
-function fncJsonRequest(url, method, userJSON) {
-	xmlHttp = createXMLHttpRequest();
+function fncJsonRequest(url, method, userJSON, handleResponse) {
+	var xmlHttp = createXMLHttpRequest();
 	xmlHttp.open(method, url, true);
-	xmlHttp.onreadystatechange = handleStateChange;
-//	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xmlHttp.onreadystatechange = function() {
+		if(xmlHttp.readyState == 4) {
+			try { 
+				var responseJson = eval("("+xmlHttp.responseText+")");
+				if (typeof handleResponse != 'undefined' && handleResponse != null && typeof(handleResponse) == 'function') {
+					handleResponse(responseJson);
+	    		}
+			} catch(e) {
+				alert("EXCEPTION:"+xmlHttp.responseText);
+			}
+		}
+	};
 	xmlHttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-//	xmlHttp.setRequestHeader("Content-type", "application/json");
 	
 	xmlHttp.send(userJSON);
 }
 
 function fncJsonRequest2(method, url, async, userJSON, handleResponse) {
-	xmlHttp = createXMLHttpRequest();
+	var xmlHttp = createXMLHttpRequest();
 	xmlHttp.open(method, url, async);
 	
 	if(async == true || typeof async == 'undefined' || async == '') {
@@ -65,18 +51,16 @@ function fncJsonRequest2(method, url, async, userJSON, handleResponse) {
 						jsonResponse(resultCode, resultMessage, resultValue);
 		    		}
 				} catch(e) {
+					alert("EXCEPTION:"+xmlHttp.responseText);
 				}
 			}
 		};
 	}
-//	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlHttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-//	xmlHttp.setRequestHeader("Content-type", "application/json");
 	
 	if(userJSON == null || typeof userJSON == 'undefined') {
 		userJSON = '';
 	}
-	
 	xmlHttp.send(userJSON);
 	
 	if(async == false) {
@@ -85,7 +69,7 @@ function fncJsonRequest2(method, url, async, userJSON, handleResponse) {
 }
 
 function jsonResponse(resultCode, resultMessage, resultValue) {
-//	alert('jsonResponse');	
+
 }
 
 function handleStateChange(handleResponse) {
@@ -106,25 +90,8 @@ function handleStateChange(handleResponse) {
 	}
 }
 
-function parseResults() {
-//	var responseText = document.createTextNode(xmlHttp.responseText);
-	try { 
-		var responseJson = eval("("+xmlHttp.responseText+")");
-		var resultCode = responseJson.resultCode;
-		var resultMessage = responseJson.resultMessage;
-		var resultMap = responseJson.resultMap;
-		
-		jsonResponse(resultCode, resultMessage, resultMap);
-	} catch(e) {
-//		alert("EXCEPTION:"+xmlHttp.responseText);
-	}
-
-}
-
 
 function createXMLHttpRequest(){
-	  // See http://en.wikipedia.org/wiki/XMLHttpRequest
-	  // Provide the XMLHttpRequest class for IE 5.x-6.x:
 	  if( typeof XMLHttpRequest == "undefined" ) XMLHttpRequest = function() {
 	    try { return new ActiveXObject("Msxml2.XMLHTTP.6.0") } catch(e) {}
 	    try { return new ActiveXObject("Msxml2.XMLHTTP.3.0") } catch(e) {}

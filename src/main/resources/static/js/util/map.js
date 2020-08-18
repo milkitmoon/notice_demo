@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 Map = function(){
  this.map = new Object();

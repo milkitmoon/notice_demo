@@ -6,8 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import com.milkit.app.common.AppCommon;
-import com.milkit.app.common.AttachInfo;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 import com.milkit.app.common.file.FileSystemStorageServiceImpl;
 import com.milkit.app.common.file.FileUploadProperties;
 import com.milkit.app.domain.notice.Notice;
@@ -62,7 +61,6 @@ public class NoticeAttachServiceImpl {
     }
     
 	public Long insert(NoticeAttach noticeAttach) throws Exception {
-		
 		return noticeRepository.save(noticeAttach).getId();
 	}
  

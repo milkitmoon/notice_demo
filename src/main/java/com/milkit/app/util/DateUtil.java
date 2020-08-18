@@ -73,12 +73,6 @@ public class DateUtil {
     }
     
     public static int getMinDiff(String sDate1, String sDate2) {
-//  	String dateStr1 = validChkDate(sDate1);
-//    	String dateStr2 = validChkDate(sDate2);
-    	
-//        if (!checkDate(sDate1) || !checkDate(sDate2)) {
-//            throw new IllegalArgumentException("Invalid date format: args[0]=" + sDate1 + " args[1]=" + sDate2);
-//        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
         
         Date date1 = null;
@@ -98,13 +92,6 @@ public class DateUtil {
     }
     
     public static int getMinDiff(Date date1, Date date2) {
-//  	String dateStr1 = validChkDate(sDate1);
-//    	String dateStr2 = validChkDate(sDate2);
-    	
-//        if (!checkDate(sDate1) || !checkDate(sDate2)) {
-//            throw new IllegalArgumentException("Invalid date format: args[0]=" + sDate1 + " args[1]=" + sDate2);
-//        }
-        
     	int minDiff = 0;
     	
     	if(date1 != null && date2 != null) {
@@ -322,14 +309,6 @@ public class DateUtil {
         return checkDate(year, month, day);
     }   
 
-    /**
-     * <p>입력한 년, 월, 일이 유효한지 검사.</p>
-     * 
-     * @param  year 연도
-     * @param  month 월
-     * @param  day 일
-     * @return  유효한 날짜인지 여부
-     */
     public static boolean checkDate(String year, String month, String day) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
@@ -344,6 +323,5 @@ public class DateUtil {
             return false;
         }
     }
-    
 
 }

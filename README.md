@@ -11,14 +11,14 @@
 - IDE : STS 4
 - 프레임워크 : spring boot 2.3.1
 - 의존성 & 빌드 관리 : gradle
-- 인증 : Spring Security
+- 인증 : spring security
 - Persistence : JPA (Hibernate) 
 - Database : H2 (in memory)
 - OAS : Swagger
 
 > Swagger API명세 페이지 보기
-- 어플리케이션 기동 후 아래와 같이 [http://localhost:8080/swagger-ui.html] 접속하여 API페이지를 조회할 수 있습니다.
-<img src="https://user-images.githubusercontent.com/61044774/90228646-8d25bf80-de51-11ea-9adb-29d48b5dab6a.jpg" width="90%"></img>
+- 어플리케이션 기동 후 아래와 같이 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 접속하여 API페이지를 조회할 수 있습니다.
+<img src="https://user-images.githubusercontent.com/61044774/90470832-7a640100-e157-11ea-8122-ed5dc8e955e5.jpg" width="90%"></img>
 
 
 > H2 database 웹console 접속경로는 다음과 같습니다. [http://localhost:8080/h2-console/](http://localhost:8080/h2-console/) 
@@ -28,7 +28,7 @@
 - Driver Class : org.h2.Driver
 - JDBC URL : jdbc:h2:mem:testdb
 - User Name : sa
-- Password : 없음
+- Password : [없음]
 
 
 # 3. 빌드 및 실행
@@ -69,7 +69,7 @@
 <img src="https://user-images.githubusercontent.com/61044774/85558776-0a0f9680-b664-11ea-9efd-e7fa8829266f.jpg" width="90%"></img>
 
 
-# 5. 구현기능 및 요구사항
+# 5. 구현기능
 > 구현기능
 - 공지 등록/수정/삭제기능
 - 공지목록 조회 기능 (제목, 작성일, 작성자, 최종수정일, 내용)

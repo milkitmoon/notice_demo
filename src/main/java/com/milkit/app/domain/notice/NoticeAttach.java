@@ -12,38 +12,57 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.milkit.app.common.AttachInfo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 @Table(name = "NOTICE_ATTACH")
 @Entity
+@ApiModel
 public class NoticeAttach {
 	
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @ApiModelProperty(value="첨부파일번호")
 	private Long id;
 	
     @Column(name = "NOTICE_ID")
+    @ApiModelProperty(value="글번호")
 	private Long noticeID;
 	
     @Column(name = "FILE_NAME")
+    @ApiModelProperty(value="첨부파일명")
 	private String filename;
+    
     @Column(name = "URL")
+    @ApiModelProperty(value="첨부파일 url")
 	private String url;
+    
     @Column(name = "THUMB_URL")
+    @ApiModelProperty(value="첨부파일 Thumbnail url")
 	private String thumbUrl;
+    
     @Column(name = "USE_YN")
+    @ApiModelProperty(value="첨부파일삭제여부")
 	private String useYN;
 	
     @Column(name = "INST_TIME")
+    @ApiModelProperty(value="등록시간")
 	private Date instTime;
+    
     @Column(name = "UPD_TIME")
+    @ApiModelProperty(value="갱신시간")
 	private Date updTime;
+    
     @Column(name = "INST_USER")
+    @ApiModelProperty(value="첨부파일 등록자")
 	private String instUser;
+    
     @Column(name = "UPD_USER")
+    @ApiModelProperty(value="첨부파일 갱신자")
 	private String updUser;
     
+    @ApiModelProperty(value="첨부파일 타입", notes="형식 (1:image, 9:etc)")
     private String resourceType;
 
 	
@@ -65,17 +84,6 @@ public class NoticeAttach {
 		this.useYN = useYN;
 	}
 
-
-	public NoticeAttach(String httpUrl, Long noticeID, AttachInfo attachInfo) {
-		this();
-
-		this.noticeID = noticeID;
-		this.filename = attachInfo.getFilename();
-		this.url = httpUrl+attachInfo.getResourceURL();
-		this.thumbUrl = httpUrl+attachInfo.getThumbnaleURL();
-		this.resourceType = attachInfo.getResourceType();
-	}
-	
 	public NoticeAttach(Long noticeID, String filename, String url, String thumbUrl, String contentType, String instUser) {
 		this.noticeID = noticeID;
 		this.filename = filename;

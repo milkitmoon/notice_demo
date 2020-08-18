@@ -7,9 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.milkit.app.common.Grid;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel
 public class GridResponse<T> extends GenericResponse {
 
+	@ApiModelProperty(value="Grid 결과값")
 	private Grid grid = null;
 	
 	public GridResponse() {

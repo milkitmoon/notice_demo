@@ -1,22 +1,24 @@
 package com.milkit.app.domain.notice;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import com.milkit.app.common.JsonPrinter;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+
 import com.milkit.app.domain.notice.service.NoticeAttachServiceImpl;
-import com.milkit.app.util.PrintUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
@@ -29,35 +31,27 @@ class NoticeAttachServiceTests {
 	@Autowired
     private NoticeAttachServiceImpl noticeAttachServie;
 
-
-	@Test
-	public void NoticeAttach_테스트() throws Exception {
-		Long id = insert(1l, "test.jpg", "Y");
-		assertTrue(id > 0);
-
-		delete(id, "test");
-		List<NoticeAttach> list = selectAll(1l, 0, 10);
-		assertTrue(list.size() == 0);
-
-		전체조회_테스트();
+	@BeforeEach
+	public void init() throws Exception {
+		noticeAttachServie.insert(new NoticeAttach(1l, "test1.jpg", "Y"));
+		noticeAttachServie.insert(new NoticeAttach(1l, "test2.jpg", "Y"));
+		noticeAttachServie.insert(new NoticeAttach(1l, "test3.jpg", "Y"));
 	}
 
 
 /**/
 	@Test
 	public void 전체조회_테스트() throws Exception {
-		insert(1l, "test.jpg", "Y");
-		insert(1l, "test2.jpg", "Y");
-		insert(1l, "test3.jpg", "Y");
+		long noticeID = 1L;
 		
-		List<NoticeAttach> list = selectAll(1l, 0, 2);
+		List<NoticeAttach> list = selectAll(noticeID, 0, 2);
 
 		assertTrue(list.size() == 2);
 	}
 
 	@Test
 	public void 등록_테스트() throws Exception {
-		Long id = insert(1l, "test.jpg", "Y");
+		long id = noticeAttachServie.insert(new NoticeAttach(2l, "test2.jpg", "Y"));
 
 		assertTrue(id > 0);
 	}
@@ -65,12 +59,30 @@ class NoticeAttachServiceTests {
 	
 	@Test
 	public void 삭제_테스트() throws Exception {
-		Long id = insert(1l, "test.jpg", "Y");
-		delete(id, "test");
 		
-		List<NoticeAttach> list = selectAll(1l, 0, 10);
+		long id = noticeAttachServie.insert(new NoticeAttach(1L, "test9.jpg", "Y"));
 		
-		assertTrue(list.size() == 0);
+		noticeAttachServie.disable(id, "test");
+		
+		List<NoticeAttach> list = selectAll(1L, 0, 10);
+		
+		log.debug("## size:"+list.size());
+		
+		assertTrue(list.size() == 3);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void 업로드_테스트() throws Exception {
+		
+        MockMultipartFile uploadfile = new MockMultipartFile("uploadfile", "foo.txt", MediaType.TEXT_PLAIN_VALUE, "Hello World".getBytes());
+        ResourceDataForm resourceDataForm = new ResourceDataForm(1L, uploadfile);
+        
+		NoticeAttach noticeAttach = noticeAttachServie.uploadResource(resourceDataForm, "test");
+		
+		assertTrue(noticeAttach != null);
+		assertEquals(noticeAttach.getNoticeID(), 1L);
+		assertEquals(noticeAttach.getFilename(), "foo.txt");
 	}
 	
 	
@@ -80,15 +92,6 @@ class NoticeAttachServiceTests {
 		Page<NoticeAttach> pages = noticeAttachServie.selectAll(noticeID, "Y", firstPageWithTwoElements);
 
 		return pages.getContent();
-	}
-	
-	private Long insert(Long noticeID, String filename, String useYN) throws Exception {
-		NoticeAttach notice = new NoticeAttach(noticeID, filename, useYN);
-		return noticeAttachServie.insert(notice);
-	}
-	
-	private void delete(Long id, String updUser) throws Exception {
-		noticeAttachServie.disable(id, updUser);
 	}
 
 }

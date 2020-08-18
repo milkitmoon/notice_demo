@@ -1,7 +1,7 @@
 package com.milkit.app.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 

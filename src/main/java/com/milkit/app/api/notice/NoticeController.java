@@ -1,13 +1,11 @@
 package com.milkit.app.api.notice;
 
-import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,83 +14,85 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.milkit.app.common.ErrorCode;
-import com.milkit.app.common.exception.ServiceException;
-import com.milkit.app.common.exception.handler.RestResponseEntityExceptionHandler;
+import com.milkit.app.api.AbstractApiController;
 import com.milkit.app.common.response.GenericResponse;
 import com.milkit.app.common.response.GridResponse;
 import com.milkit.app.domain.notice.Notice;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
 import com.milkit.app.domain.userinfo.UserInfo;
 
-import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
 
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/api/notice")
-@Slf4j
-public class NoticeController {
+@Api(tags = "1. 공지사항", value = "NoticeController")
+public class NoticeController extends AbstractApiController {
 
     @Autowired
     private NoticeServiceImpl noticeService;
 
+    
     @GetMapping
-    public @ResponseBody GridResponse<Notice> noticeAll(
-			@RequestParam(value="page", defaultValue="1", required=false) String page,
-			@RequestParam(value="rows", defaultValue="10", required=false) String limit,
-			@RequestParam(value="useYN", defaultValue="Y", required=false) String useYN
+    @ApiOperation(value = "공지사항 전체조회", notes = "공지사항 전체 목록을 조회한다.")
+    public ResponseEntity<GridResponse<Notice>> noticeAll(
+    		@ApiParam(value = "현재Page 번호", required = false, example = "1") @RequestParam(value="page", defaultValue="1", required=false) String page,
+    		@ApiParam(value = "Page당 목록 수", required = false, example = "10") @RequestParam(value="rows", defaultValue="10", required=false) String limit,
+    		@ApiParam(value = "조회 글목록의 useYN 여부(useYN='Y' 일 경우 useYN='Y'인 글목록 만, 그 외에는 전체)", required = false, example = "Y") @RequestParam(value="useYN", defaultValue="Y", required=false) String useYN
 			) throws Exception {
-    	Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(limit));
-    	Page<Notice> pages = noticeService.selectAll(useYN, pageable);
     	
-    	GridResponse<Notice> response = new GridResponse<Notice>();
-    	response.setRows(pages.getContent());
-		response.setPage(page);
-		response.setTotal(pages.getTotalPages());
-		response.setRecords(pages.getNumberOfElements());
-    	
-		return response;
+		return apiResponse(() -> {
+	    	Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(limit));
+	    	Page<Notice> pages = noticeService.selectAll(useYN, pageable);
+	    	
+	    	GridResponse<Notice> response = new GridResponse<Notice>();
+	    	response.setRows(pages.getContent());
+			response.setPage(page);
+			response.setTotal(pages.getTotalPages());
+			response.setRecords(pages.getNumberOfElements());
+			
+			return response;
+		});
     }
     
     @GetMapping(value = "/{id}")
-    public @ResponseBody GenericResponse<Notice> notice(
-    		@PathVariable(value="id") String id
+    @ApiOperation(value = "공지사항 조회", notes = "글번호로 공지사항 목록을 조회한다.")
+    public ResponseEntity<GenericResponse<Notice>> notice(
+    		@ApiParam(value = "조회할 글번호", required = true) @PathVariable(value="id", required=true) String id
 			) throws Exception {
    	
     	Notice notice = noticeService.select(Long.valueOf(id));
-    	
-		return new GenericResponse<Notice>(notice);
+
+    	return apiResponse(() -> new GenericResponse<Notice>(notice));
     }
     
+    
 	@PostMapping
-	@SuppressWarnings("rawtypes")
-    public @ResponseBody GenericResponse<?> insert(
-			@RequestBody final Notice notice,
+	@ApiOperation(value = "공지사항 등록", notes = "신규 공지사항을 등록한다.")
+    public ResponseEntity<GenericResponse<?>> insert(
+    		@ApiParam(value = "등록할 글번호", required = true) @RequestBody(required=true) final Notice notice,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
-    	
-    	GenericResponse<Notice> response = new GenericResponse<Notice>();
     	
    		if(userInfo != null) {
    	        notice.initNotice(userInfo.getUsername());
        	}
     		
-    	Long id = noticeService.insert(notice);
+    	noticeService.insert(notice);
     	
-		return new GenericResponse();
+    	return apiResponse(() -> GenericResponse.success());
     }
     
     @PutMapping
-    @SuppressWarnings("rawtypes")
-    public @ResponseBody GenericResponse<?> update(
-			@RequestBody final Notice notice,
+    @ApiOperation(value = "공지사항 갱신", notes = "공지사항을 갱신한다.")
+    public ResponseEntity<GenericResponse<?>> update(
+    		@ApiParam(value = "갱신할 공지사항 정보", required = true) @RequestBody(required=true) final Notice notice,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
     	
@@ -100,23 +100,26 @@ public class NoticeController {
     		notice.setUpdUser(userInfo.getUsername());
     	}
     		
-    	Integer updateCnt = noticeService.update(notice);
+    	noticeService.update(notice);
     	
-    	return new GenericResponse();
+    	return apiResponse(() -> GenericResponse.success());
     }
     
     @DeleteMapping(value = "/{id}")
-    @SuppressWarnings("rawtypes")
-    public @ResponseBody GenericResponse<?> delete(
-    		@PathVariable(value="id") String id,
+    @ApiOperation(value = "공지사항 삭제", notes = "공지사항을 삭제한다.(삭제 시 useYN = 'N')")
+    public ResponseEntity<GenericResponse<?>> delete(
+    		@ApiParam(value = "삭제할 글번호", required = true) @PathVariable(value="id", required=true) String id,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
     	
-   		String updUser = userInfo.getUsername();
+   		String updUser = "UNAUTHORIZED";
+   		if(userInfo != null) {
+   			updUser = userInfo.getUsername();
+       	}
     		
     	noticeService.disable(Long.valueOf(id), updUser);
     	
-    	return new GenericResponse();
+    	return apiResponse(() -> GenericResponse.success());
     }
     
 }

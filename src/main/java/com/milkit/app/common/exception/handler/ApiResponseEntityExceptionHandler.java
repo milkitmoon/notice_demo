@@ -14,9 +14,9 @@ import com.milkit.app.common.response.GenericResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-@ControllerAdvice
 @Slf4j
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice
+public class ApiResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = { RuntimeException.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
