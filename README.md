@@ -68,6 +68,7 @@
 
 - id : test
 - password : test
+
 <img src="https://user-images.githubusercontent.com/61044774/85558776-0a0f9680-b664-11ea-9efd-e7fa8829266f.jpg" width="90%"></img>
 
 
@@ -79,6 +80,7 @@
 - 여러개의 첨부파일 등록 기능
 
 **파일업로드 후 이미지가 안보일 수 있습니다. 그럴경우 아래와 같이 Project를 refresh 해주세요.**
+
 <img src="https://user-images.githubusercontent.com/61044774/85596326-95008900-b684-11ea-9d44-ff2fd1bc166e.jpg" width="90%"></img>
 
 
