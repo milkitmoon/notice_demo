@@ -21,7 +21,8 @@
 <img src="https://user-images.githubusercontent.com/61044774/90470832-7a640100-e157-11ea-8122-ed5dc8e955e5.jpg" width="90%"></img>
 
 
-> H2 database 웹console 접속경로는 다음과 같습니다. [http://localhost:8080/h2-console/](http://localhost:8080/h2-console/) 
+> H2 database 웹콘솔 보기
+- H2 웹console 접속경로는 다음과 같습니다. [http://localhost:8080/h2-console/](http://localhost:8080/h2-console/) 
 <img src="https://user-images.githubusercontent.com/61044774/85590819-b0b56080-b67f-11ea-8415-3eb50f5b82b8.jpg" width="90%"></img>
 
 - Driver Class : org.h2.Driver
