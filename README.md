@@ -22,7 +22,6 @@
 
 
 > H2 database 웹console 접속경로는 다음과 같습니다. [http://localhost:8080/h2-console/](http://localhost:8080/h2-console/) 
-
 <img src="https://user-images.githubusercontent.com/61044774/85590819-b0b56080-b67f-11ea-8415-3eb50f5b82b8.jpg" width="90%"></img>
 
 - Driver Class : org.h2.Driver
@@ -35,7 +34,6 @@
 
 > Tips 
 - 만약 빌드가 제대로 진행되지 않거나 오류가 발생 시 아래와 같이 STS에서 'Refresh Gradle Project' 를 클릭해 주세요
-
 <img src="https://user-images.githubusercontent.com/61044774/85550736-34f5ec80-b65c-11ea-865b-981c6b72f2b9.jpg" width="90%"></img>
 
 ---
@@ -50,11 +48,9 @@
 ## build 하기 (war 파일 생성)
 
 - 아래 그림과 같이 'Gradle Tasks' 메뉴에서 'bootWar' 를 오른쪽 클릭하여 'Run Gradle Tasks' 를 실행합니다.
-
 <img src="https://user-images.githubusercontent.com/61044774/85556604-f5320380-b661-11ea-8020-04290b8762d4.jpg" width="90%"></img>
 
 - [프로젝트경로]/build/lib 경로에 build 된 war 파일이 생성됩니다.
-
 <img src="https://user-images.githubusercontent.com/61044774/85557150-7d180d80-b662-11ea-9fd8-2bd1bbc23df3.jpg" width="90%"></img>
 
 
@@ -62,8 +58,7 @@
 
 > 소스 main Application 실행하기 
 - com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있습니다.
- 
-<img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
+ <img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
 
 
 # 4. 로그인
@@ -72,7 +67,6 @@
 
 - id : test
 - password : test
-
 <img src="https://user-images.githubusercontent.com/61044774/85558776-0a0f9680-b664-11ea-9efd-e7fa8829266f.jpg" width="90%"></img>
 
 
@@ -84,7 +78,6 @@
 - 여러개의 첨부파일 등록 기능
 
 **파일업로드 후 이미지가 안보일 수 있습니다. 그럴경우 아래와 같이 Project를 refresh 해주세요.**
-
 <img src="https://user-images.githubusercontent.com/61044774/85596326-95008900-b684-11ea-9d44-ff2fd1bc166e.jpg" width="90%"></img>
 
 
