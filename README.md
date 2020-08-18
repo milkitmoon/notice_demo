@@ -40,6 +40,12 @@
 
 ---
 
+- 만약 lombok 관련 오류가 발생하면 아래의 url을 참조해 주세요
+[https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts](https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts)
+[https://countryxide.tistory.com/16](https://countryxide.tistory.com/16)
+
+---
+
 ## build 하기 (war 파일 생성)
 
 - 아래 그림과 같이 'Gradle Tasks' 메뉴에서 'bootWar' 를 오른쪽 클릭하여 'Run Gradle Tasks' 를 실행합니다.
