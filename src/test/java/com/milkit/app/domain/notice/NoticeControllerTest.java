@@ -8,7 +8,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import com.milkit.app.api.notice.NoticeController;
-import com.milkit.app.common.response.GridResponse;
 import com.milkit.app.config.WebSecurityConfigure;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
 import com.milkit.app.domain.userinfo.service.UserInfoServiceImpl;
@@ -68,16 +67,16 @@ public class NoticeControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("total").value("1"))
-                .andExpect(jsonPath("records").value("2"))
-                .andExpect(jsonPath("rows[0].id").value(1L))
-                .andExpect(jsonPath("rows[0].title").value("제목"))
-                .andExpect(jsonPath("rows[0].content").value("내용"))
-                .andExpect(jsonPath("rows[0].instUser").value("test"))
-                .andExpect(jsonPath("rows[1].id").value(2L))
-                .andExpect(jsonPath("rows[1].title").value("제목2"))
-                .andExpect(jsonPath("rows[1].content").value("내용2"))
-                .andExpect(jsonPath("rows[1].instUser").value("test"))
+                .andExpect(jsonPath("value.total").value("1"))
+                .andExpect(jsonPath("value.records").value("2"))
+                .andExpect(jsonPath("value.rows[0].id").value(1L))
+                .andExpect(jsonPath("value.rows[0].title").value("제목"))
+                .andExpect(jsonPath("value.rows[0].content").value("내용"))
+                .andExpect(jsonPath("value.rows[0].instUser").value("test"))
+                .andExpect(jsonPath("value.rows[1].id").value(2L))
+                .andExpect(jsonPath("value.rows[1].title").value("제목2"))
+                .andExpect(jsonPath("value.rows[1].content").value("내용2"))
+                .andExpect(jsonPath("value.rows[1].instUser").value("test"))
                 ;
     }
     
@@ -97,10 +96,10 @@ public class NoticeControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultValue.id").value(1L))
-                .andExpect(jsonPath("resultValue.title").value("제목"))
-                .andExpect(jsonPath("resultValue.content").value("내용"))
-                .andExpect(jsonPath("resultValue.instUser").value("test"));
+                .andExpect(jsonPath("value.id").value(1L))
+                .andExpect(jsonPath("value.title").value("제목"))
+                .andExpect(jsonPath("value.content").value("내용"))
+                .andExpect(jsonPath("value.instUser").value("test"));
     }
     
     
@@ -124,8 +123,8 @@ public class NoticeControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultCode").value("0"))
-                .andExpect(jsonPath("resultMessage").value("성공했습니다"));
+                .andExpect(jsonPath("code").value("0"))
+                .andExpect(jsonPath("message").value("성공했습니다"));
                 
     }
     
@@ -149,8 +148,8 @@ public class NoticeControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultCode").value("0"))
-                .andExpect(jsonPath("resultMessage").value("성공했습니다"));
+                .andExpect(jsonPath("code").value("0"))
+                .andExpect(jsonPath("message").value("성공했습니다"));
                 
     }
     
@@ -168,8 +167,8 @@ public class NoticeControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultCode").value("0"))
-                .andExpect(jsonPath("resultMessage").value("성공했습니다"));
+                .andExpect(jsonPath("code").value("0"))
+                .andExpect(jsonPath("message").value("성공했습니다"));
                 
     }
     

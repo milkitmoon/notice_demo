@@ -1,5 +1,5 @@
 package com.milkit.app.common.response;
 
-public interface AnonymouseResult {
-	Object body() throws Exception;
+public interface AnonymouseResult<T> {
+	T body() throws Exception;
 }

@@ -30,7 +30,7 @@ public class UserInfoController extends AbstractApiController {
 
     @GetMapping("/api/userinfo")
     @ApiOperation(value = "사용자정보 전체조회", notes = "사용자정보 전체 목록을 조회한다.")
-    public ResponseEntity<List<UserInfo>> userinfo() throws Exception {
+    public ResponseEntity<GenericResponse<List<UserInfo>>> userinfo() throws Exception {
         return apiResponse(() -> memberServie.selectAll());
     }
     

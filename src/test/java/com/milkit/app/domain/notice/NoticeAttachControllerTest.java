@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import com.milkit.app.api.notice.NoticeAttachController;
 import com.milkit.app.api.notice.NoticeController;
 import com.milkit.app.common.response.GenericResponse;
-import com.milkit.app.common.response.GridResponse;
 import com.milkit.app.config.WebSecurityConfigure;
 import com.milkit.app.domain.notice.service.NoticeAttachServiceImpl;
 import com.milkit.app.domain.notice.service.NoticeServiceImpl;
@@ -80,20 +79,20 @@ public class NoticeAttachControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("total").value("1"))
-                .andExpect(jsonPath("records").value("2"))
-                .andExpect(jsonPath("rows[0].noticeID").value(1L))
-                .andExpect(jsonPath("rows[0].filename").value("test.jpg"))
-                .andExpect(jsonPath("rows[0].url").value("/upload/test.jpg"))
-                .andExpect(jsonPath("rows[0].thumbUrl").value("/upload/tmb_test.jpg"))
-                .andExpect(jsonPath("rows[0].resourceType").value("1"))
-                .andExpect(jsonPath("rows[0].instUser").value("test"))
-                .andExpect(jsonPath("rows[1].noticeID").value(1L))
-                .andExpect(jsonPath("rows[1].filename").value("test2.jpg"))
-                .andExpect(jsonPath("rows[1].url").value("/upload/test2.jpg"))
-                .andExpect(jsonPath("rows[1].thumbUrl").value("/upload/tmb_test2.jpg"))
-                .andExpect(jsonPath("rows[1].resourceType").value("1"))
-                .andExpect(jsonPath("rows[1].instUser").value("test"))
+                .andExpect(jsonPath("value.total").value("1"))
+                .andExpect(jsonPath("value.records").value("2"))
+                .andExpect(jsonPath("value.rows[0].noticeID").value(1L))
+                .andExpect(jsonPath("value.rows[0].filename").value("test.jpg"))
+                .andExpect(jsonPath("value.rows[0].url").value("/upload/test.jpg"))
+                .andExpect(jsonPath("value.rows[0].thumbUrl").value("/upload/tmb_test.jpg"))
+                .andExpect(jsonPath("value.rows[0].resourceType").value("1"))
+                .andExpect(jsonPath("value.rows[0].instUser").value("test"))
+                .andExpect(jsonPath("value.rows[1].noticeID").value(1L))
+                .andExpect(jsonPath("value.rows[1].filename").value("test2.jpg"))
+                .andExpect(jsonPath("value.rows[1].url").value("/upload/test2.jpg"))
+                .andExpect(jsonPath("value.rows[1].thumbUrl").value("/upload/tmb_test2.jpg"))
+                .andExpect(jsonPath("value.rows[1].resourceType").value("1"))
+                .andExpect(jsonPath("value.rows[1].instUser").value("test"))
                 ;
     }
     
@@ -111,8 +110,8 @@ public class NoticeAttachControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultCode").value("0"))
-                .andExpect(jsonPath("resultMessage").value("성공했습니다"));
+                .andExpect(jsonPath("code").value("0"))
+                .andExpect(jsonPath("message").value("성공했습니다"));
                 
     }
     
@@ -139,8 +138,8 @@ public class NoticeAttachControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("resultCode").value("0"))
-                .andExpect(jsonPath("resultMessage").value("성공했습니다"))
+                .andExpect(jsonPath("code").value("0"))
+                .andExpect(jsonPath("message").value("성공했습니다"))
                 ;
                 
     }

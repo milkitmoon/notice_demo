@@ -41,14 +41,14 @@ function fncJsonRequest2(method, url, async, userJSON, handleResponse) {
 			if(xmlHttp.readyState == 4) {
 				try { 
 					var responseJson = eval("("+xmlHttp.responseText+")");
-					var resultCode = responseJson.resultCode;
-					var resultMessage = responseJson.resultMessage;
-					var resultValue = responseJson.resultValue;
+					var code = responseJson.code;
+					var message = responseJson.message;
+					var value = responseJson.value;
 	
 					if (handleResponse != null && typeof(handleResponse) == 'function') {
-						handleResponse(resultCode, resultMessage, resultValue);
+						handleResponse(code, message, value);
 		    		} else {
-						jsonResponse(resultCode, resultMessage, resultValue);
+						jsonResponse(code, message, value);
 		    		}
 				} catch(e) {
 					alert("EXCEPTION:"+xmlHttp.responseText);
@@ -65,28 +65,6 @@ function fncJsonRequest2(method, url, async, userJSON, handleResponse) {
 	
 	if(async == false) {
 		return eval("("+xmlHttp.responseText+")");
-	}
-}
-
-function jsonResponse(resultCode, resultMessage, resultValue) {
-
-}
-
-function handleStateChange(handleResponse) {
-	if(xmlHttp.readyState == 4) {
-		try { 
-			var responseJson = eval("("+xmlHttp.responseText+")");
-			var resultCode = responseJson.resultCode;
-			var resultMessage = responseJson.resultMessage;
-			var resultMap = responseJson.resultMap;
-			
-			if (handleResponse != null && typeof(handleResponse) == 'function') {
-				jsonResponse = handleResponse;
-    		}
-			
-			jsonResponse(resultCode, resultMessage, resultMap);
-		} catch(e) {
-		}
 	}
 }
 

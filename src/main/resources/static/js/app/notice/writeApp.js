@@ -11,10 +11,12 @@ function initApp(wmode, id) {
 			function(result, statusText, xhr, $form) {
 				$("#mlist").jqGrid("clearGridData", true);
 
-				if(result.resultCode == RESULT_CODE_OK) {
+				if(result.code == RESULT_CODE_OK) {
 				   	alert("파일이 업로드되었습니다.");
 
-				   	var resultData = result.resultValue;
+console.log(result);				   	
+				   	
+				   	var resultData = result.value;
 
 				   	fncSearchResourceDataInfo(resultData.noticeID);
 				   	if(resultData.resourceType == '1') {
@@ -23,7 +25,7 @@ function initApp(wmode, id) {
 				   		renderImage("#posImg", '../../images/blank_img.png', '../../images/blank_img.png', "#imgDialog", null);
 				   	}
 				} else {
-					alert(result.resultMessage);
+					alert(result.message);
 				}
 
 				fncClearFileNode();
@@ -160,10 +162,10 @@ function initGrid() {
 	        }
 	    },
 	    jsonReader : {
-            root: 'rows',
-            page: 'page',
-            total: 'total',
-            records: 'records',
+            root: 'value.rows',
+            page: 'value.page',
+            total: 'value.total',
+            records: 'value.records',
             repeatitems: false,
             cell: 'cell',
             id: 'seq'

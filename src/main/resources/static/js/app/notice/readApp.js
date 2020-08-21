@@ -37,8 +37,8 @@ function initInfo(id) {
 function initAttachFiles(id) {
 	fncJsonRequest(contextPath+'/api/noticeattach/'+id+"?page=1&rows=1000&useYN=Y", 'GET', null,   
 		function(response) {
-			if (response.resultCode == RESULT_CODE_OK) {
-		    	var noticeattachArray = response.rows;
+			if (response.code == RESULT_CODE_OK) {
+		    	var noticeattachArray = response.value.rows;
 		    	if(typeof noticeattachArray != 'undefined' && noticeattachArray != null) {
 			    	for(var i=0; i<noticeattachArray.length; i++) {
 			    		$("#attachFiles").prepend($("<a href='"+noticeattachArray[i].url+"' target='_blank' style='padding:0 5px 0 0'>"+ noticeattachArray[i].filename+"</a>"));

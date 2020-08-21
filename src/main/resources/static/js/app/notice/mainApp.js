@@ -49,10 +49,10 @@ function initGrid() {
 	    },
 
 		jsonReader : {
-          root: 'rows',
-          page: 'page',
-          total: 'total',
-          records: 'records',
+          root: 'value.rows',
+          page: 'value.page',
+          total: 'value.total',
+          records: 'value.records',
           repeatitems: false,
           cell: 'cell',
           id: 'id'

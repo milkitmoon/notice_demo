@@ -16,54 +16,54 @@ import io.swagger.annotations.ApiModelProperty;
 public class GenericResponse<T> implements Serializable {
 
 	@ApiModelProperty(value="결과코드", notes="형식 (0:성공, others:실패)")
-	private String resultCode;
+	private String code;
 	@ApiModelProperty(value="결과메시지")
-	private String resultMessage;
+	private String message;
 	@ApiModelProperty(value="결과값", notes="형식 (template으로 정의된 값)")
-	private T resultValue;
+	private T value;
 	
 	
 	public GenericResponse() {
 		this(Integer.toString(ErrorCode.OK), "성공했습니다");
 	}
 
-	public GenericResponse(int resultCode, String resultMessage) {
-		this(Integer.toString(resultCode), resultMessage);
+	public GenericResponse(int code, String message) {
+		this(Integer.toString(code), message);
 	}
 	
-	public GenericResponse(String resultCode, String resultMessage) {
-		this.resultCode = resultCode;
-		this.resultMessage = resultMessage;
+	public GenericResponse(String code, String message) {
+		this.code = code;
+		this.message = message;
 	}
 	
-	public GenericResponse(T t) {
+	public GenericResponse(T value) {
 		this();
-		this.resultValue = t;
+		this.value = value;
 	}
 	
 	
-	public String getResultCode() {
-		return resultCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
-	public String getResultMessage() {
-		return resultMessage;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setResultMessage(String resultMessage) {
-		this.resultMessage = resultMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
-	public T getResultValue() {
-		return resultValue;
+	public T getValue() {
+		return value;
 	}
 
-	public void setResultValue(T resultValue) {
-		this.resultValue = (T) resultValue;
+	public void setValue(T value) {
+		this.value = value;
 	}
 	
 

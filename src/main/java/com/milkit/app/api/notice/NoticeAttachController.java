@@ -38,7 +38,7 @@ import com.milkit.app.common.ErrorCode;
 import com.milkit.app.common.exception.ServiceException;
 import com.milkit.app.common.exception.handler.ApiResponseEntityExceptionHandler;
 import com.milkit.app.common.response.GenericResponse;
-import com.milkit.app.common.response.GridResponse;
+import com.milkit.app.common.response.Grid;
 import com.milkit.app.domain.notice.Notice;
 import com.milkit.app.domain.notice.NoticeAttach;
 import com.milkit.app.domain.notice.ResourceDataForm;
@@ -65,7 +65,7 @@ public class NoticeAttachController extends AbstractApiController {
 
     @GetMapping(value = "/{noticeID}")
     @ApiOperation(value = "공지글 첨부파일 전체조회", notes = "공지글 첨부파일 전체 목록을 조회한다.")
-    public ResponseEntity<GridResponse<NoticeAttach>> noticeattach(
+    public ResponseEntity<GenericResponse<Grid<NoticeAttach>>> noticeattach(
     		@ApiParam(value = "현재Page 번호", required = false, example = "1") @RequestParam(value="page", defaultValue="1", required=false) String page,
     		@ApiParam(value = "Page당 목록 수", required = false, example = "10") @RequestParam(value="rows", defaultValue="10", required=false) String limit,
     		@ApiParam(value = "첨부파일을 조회할 공지글번호(noticeID)", required = true) @PathVariable(value="noticeID", required=true) String noticeID,
@@ -76,20 +76,22 @@ public class NoticeAttachController extends AbstractApiController {
 	    	Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, Integer.parseInt(limit));
 	    	Page<NoticeAttach> pages = noticeAttachService.selectAll(Long.valueOf(noticeID), useYN, pageable);
 
-	    	GridResponse<NoticeAttach> response = new GridResponse<NoticeAttach>();
-	    	response.setRows(pages.getContent());
-			response.setPage(page);
-			response.setTotal(pages.getTotalPages());
-			response.setRecords(pages.getNumberOfElements());
+	    	Grid<NoticeAttach> grid = new Grid<NoticeAttach>();
+	    	grid.setRows(pages.getContent());
+	    	grid.setPage(page);
+	    	grid.setTotal(pages.getTotalPages());
+	    	grid.setRecords(pages.getNumberOfElements());
 			
-			return response;
+log.debug("\n\n\n\n"+grid.toString()+"\n\n\n");
+	    	
+			return grid;
 		});
     }
  
     
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "첨부파일 삭제", notes = "첨부파일을 삭제한다.(삭제 시 useYN = 'N')")
-	public ResponseEntity<GenericResponse<?>> delete(
+	public ResponseEntity<GenericResponse<Object>> delete(
 			@ApiParam(value = "삭제할 첨부파일번호", required = true) @PathVariable(value="id", required=true) String id,
 			@AuthenticationPrincipal UserInfo userInfo
 			) throws Exception {
@@ -118,7 +120,7 @@ public class NoticeAttachController extends AbstractApiController {
        	}
 		NoticeAttach resourceData = noticeAttachService.uploadResource(resourceDataForm, instUser);
 
-		return apiResponse(() -> new GenericResponse<NoticeAttach>(resourceData));
+		return apiResponse(() -> resourceData);
     }
 
 	
