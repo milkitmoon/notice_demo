@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class NoticeAttach {
 	
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value="첨부파일번호")
 	private Long id;
 	
