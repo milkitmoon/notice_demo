@@ -8,7 +8,6 @@
 
 # 2. 기술명세
 - 언어 : Java 1.8
-- IDE : STS 4
 - 프레임워크 : spring boot 2.3.1
 - 의존성 & 빌드 관리 : gradle
 - 인증 : spring security
@@ -31,23 +30,15 @@
 - Password : [없음]
 
 
-# 3. 빌드 및 실행
+# 3. 실행
 
 > Tips 
 - **만약 lombok 관련 오류가 발생하면 아래의 url을 참조해 주세요**
 [https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts](https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts)
-[https://countryxide.tistory.com/16](https://countryxide.tistory.com/16)
+[https://countryxide.tistory.com/16](https://countryxide.tistory.com/16)  
+[https://planbsw.tistory.com/109](https://planbsw.tistory.com/109)
 
 ---
-
-## build 하기 (war 파일 생성)
-
-- 아래 그림과 같이 'Gradle Tasks' 메뉴에서 'bootWar' 를 오른쪽 클릭하여 'Run Gradle Tasks' 를 실행합니다.
-<img src="https://user-images.githubusercontent.com/61044774/85556604-f5320380-b661-11ea-8020-04290b8762d4.jpg" width="90%"></img>
-
-- [프로젝트경로]/build/lib 경로에 build 된 war 파일이 생성됩니다.
-<img src="https://user-images.githubusercontent.com/61044774/85557150-7d180d80-b662-11ea-9fd8-2bd1bbc23df3.jpg" width="90%"></img>
-
 
 ## 실행 하기
 
