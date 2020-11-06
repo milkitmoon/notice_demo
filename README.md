@@ -43,7 +43,7 @@
 ## 실행 하기
 
 > 소스 main Application 실행하기 
-- com.milkit.app.DemoApplication 을 STS에서 run하여 바로 실행할 수 있습니다.
+- com.milkit.app.DemoApplication 을 IDE에서 run하여 바로 실행할 수 있습니다.
  <img src="https://user-images.githubusercontent.com/61044774/85557671-f44da180-b662-11ea-90cd-d25288cadf2f.jpg" width="90%"></img>
 
 
